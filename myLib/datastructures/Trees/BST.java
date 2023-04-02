@@ -91,7 +91,7 @@ public class BST {
         }
     }
 
-    private void Delete(TNode nodeToDelete) {
+    public void Delete(TNode nodeToDelete) {
         TNode parent = nodeToDelete.getParent();
     
         // Case 1: nodeToDelete is leaf
@@ -168,14 +168,28 @@ public class BST {
     }
 
     // In-order traversal method
-    public void inOrder(TNode node) {
+    public String inOrder() {
+        String result = "";
+
+        result += inOrder(root.getLeft());
+        System.out.print(root.getData() + " ");
+        result += inOrder(root.getRight());
+        
+        return result;
+    }
+
+    public String inOrder(TNode node) {
+        String result = "";
+
         if (node == null) {
-            return;
+            return result;
         }
 
-        inOrder(node.getLeft());
+        result += inOrder(node.getLeft());
         System.out.print(node.getData() + " ");
-        inOrder(node.getRight());
+        result += inOrder(node.getRight());
+
+        return result;
     }
 
 
