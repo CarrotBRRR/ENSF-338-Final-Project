@@ -24,41 +24,46 @@ public class SLL {
     }
 
     public void InsertTail(SNode node) {
-        if (this.tail == null) {
-            InsertHead(node);
+        if (this.head == null) {
+            this.head = node;
+            return;
+        } else {
+            SNode current = this.head;
+            while (current.getNext() != null) {
+                current = current.getNext();
+            }
+            current.setNext(node);
+            this.tail = node;
+            length++;
         }
-        this.tail.setNext(node);
-        this.tail = node;
-        length++;
     }
 
     public void Insert(SNode node, int position) {
-        if (position > length++) {
+        if (position > length+1) {
+            System.out.println("Position out of bounds");
+            return;
             // position out of list bounds
         }
-        else {
-            if (position == 1) {
-                // essentially setting a new head
-                InsertHead(node);
-                return;
-            }
-
-            if (position == length++) {
-                // essentially setting a new tail
-                InsertTail(node);
-                return;
-            }
-
-            SNode current = head;
-            for (int i = 1; i < position; i++) {
-                current = current.getNext();
-            }
-            SNode temp = current.getNext();
-            current.setNext(node);
-            node.setNext(temp);
-            length++;
+        if (position == 1) {
+            // essentially setting a new head
+            InsertHead(node);
             return;
         }
+        if (position == (length + 1)) {
+            // essentially setting a new tail
+            InsertTail(node);
+            return;
+        }
+        SNode current = this.head;
+        for (int i = 2; i < position && current != null; i++) {
+            current = current.getNext();
+        }
+        if (current == null) {
+            return;
+        }
+        node.setNext(current.getNext());
+        current.setNext(node);
+        length++;
     }
 
     public void SortedInsert(SNode node) {
@@ -207,13 +212,15 @@ public class SLL {
         System.out.println("List length: " + this.length);
         System.out.println("Sort status: "+ isSorted());
         SNode current = this.head;
-        int i = 1;
-        while (current != null) {
-            System.out.println("Item : " + i + " , Data : " + current.getData());
-            current = current.getNext();
-            i++;
+        if (current == null) {
+            System.out.println("Empty List");
+        } else {
+            int i = 1;
+            while (current != null) {
+                System.out.println("Index : " + i + " | Data : " + current.getData());
+                current = current.getNext();
+                i++;
+            }
         }
-        System.out.println();
-        System.out.println();
     }
 }
