@@ -26,6 +26,7 @@ public class SLL {
     public void InsertTail(SNode node) {
         if (this.head == null) {
             this.head = node;
+            this.tail = node;
             return;
         } else {
             SNode current = this.head;
