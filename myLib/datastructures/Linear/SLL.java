@@ -2,9 +2,9 @@ package myLib.datastructures.Linear;
 import myLib.datastructures.nodes.SNode;
 
 public class SLL {
-    private int length;
-    private SNode head;
-    private SNode tail;
+    protected int length;
+    protected SNode head;
+    protected SNode tail;
 
     public SLL() {
         this.head = null;
@@ -26,6 +26,8 @@ public class SLL {
     public void InsertTail(SNode node) {
         if (this.head == null) {
             this.head = node;
+            this.tail = node;
+            length = 1;
             return;
         } else {
             SNode current = this.head;
