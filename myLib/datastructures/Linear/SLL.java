@@ -2,9 +2,9 @@ package myLib.datastructures.Linear;
 import myLib.datastructures.nodes.SNode;
 
 public class SLL {
-    protected int length;
-    protected SNode head;
-    protected SNode tail;
+    private int length;
+    private SNode head;
+    private SNode tail;
 
     public SLL() {
         this.head = null;
@@ -108,13 +108,13 @@ public class SLL {
         if (length == 1) {
             this.head = null;
             this.tail = null;
-            length--;
+            this.length--;
             return;
         }
         SNode temp = this.head.getNext();
         this.head = null;
         this.head = temp;
-        length--;
+        this.length--;
     }
 
     public void DeleteTail() {
@@ -225,4 +225,17 @@ public class SLL {
             }
         }
     }
+
+    public SNode getHead() {
+        return this.head;
+    }
+
+    public SNode getTail() {
+        return this.tail;
+    }
+
+    public int getLength() {
+        return this.length;
+    }
+
 }

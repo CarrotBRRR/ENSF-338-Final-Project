@@ -3,21 +3,14 @@ package myLib.datastructures.Linear;
 import myLib.datastructures.nodes.SNode;
 
 public class QueueLL extends SLL{
-    private int length;
-    private SNode head;
-    private SNode tail;
+
 
     public QueueLL() {
-        this.head = null;
-        this.tail = null;
-        this.length = 0;
-
+        super();
     }
 
     public QueueLL(SNode node) {
-        this.head = node;
-        this.tail = node;
-        length = 1;
+        super(node);
     }
 
     @Override
@@ -51,32 +44,28 @@ public class QueueLL extends SLL{
     
     @Override
     public void Clear() {
-        super.Clear();
+        while (super.getHead() != null) {
+            super.DeleteHead();
+        }
     }
 
     public void Enqueue(SNode node) {
         super.InsertTail(node);
-        this.head = super.head;
-        this.tail = super.tail;
-        this.length = super.length;
     }
 
     public void Dequeue() {
         super.DeleteHead();
-        this.head = super.head;
-        this.tail = super.tail;
-        this.length = super.length;
     }
     
     public SNode Peek() {
-        return this.head;
+        return super.getHead();
     }
 
     public int Seek(SNode node) {
-        if (this.head == null) {
+        if (super.getHead() == null) {
             return -1;
         }
-        SNode current = this.head;
+        SNode current = super.getHead();
         int i = 1;
         while (current != null) {
             if (current == node) {
@@ -89,7 +78,7 @@ public class QueueLL extends SLL{
     }
 
     public boolean Empty() {
-        if (this.head == null) {
+        if (super.getHead() == null) {
             return true;
         } else {
             return false;
@@ -98,8 +87,8 @@ public class QueueLL extends SLL{
 
     @Override
     public void Print() {
-        System.out.println("Queue length: " + this.length);
-        SNode current = this.head;
+        System.out.println("Queue length: " + super.getLength());
+        SNode current = super.getHead();
         if (Empty() == true) {
             System.out.println("Empty Queue");
         } else {
