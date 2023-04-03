@@ -27,7 +27,7 @@ public class QueueLL extends SLL{
 
     @Override
     public SNode Search(SNode node) {
-        return null;
+        return super.Search(node);
     }
 
     @Override

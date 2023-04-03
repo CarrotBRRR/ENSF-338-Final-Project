@@ -121,18 +121,17 @@ public class SLL {
         if (length == 1) {
             this.head = null;
             this.tail = null;
-            length--;
+            this.length--;
             return;
         }
         SNode current = this.head;
         while (current.getNext() != this.tail) {
             current = current.getNext();
         }
-
-        this.tail = current;
+        this.tail = null;
         current.setNext(null);
-        length--;
-
+        this.tail = current;
+        this.length--;
     }
 
     public void Delete(SNode node) {
