@@ -40,9 +40,6 @@ public class SLL {
             this.tail = node;
             length++;
         }
-        this.tail.setNext(node);
-        this.tail = node;
-        length++;
     }
 
     public void Insert(DNode node, int position) {

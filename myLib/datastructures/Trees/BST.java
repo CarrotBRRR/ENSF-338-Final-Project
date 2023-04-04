@@ -195,12 +195,13 @@ public class BST {
 
 
     public void printBF() {
-        if (root == null) {
+        if (this.root == null) {
+            System.out.println("Tree is empty");
             return;
         }
     
         Queue<TNode> queue = new LinkedList<>();
-        queue.add(root);
+        queue.add(this.root);
 
         while (!queue.isEmpty()) {
             int levelSize = queue.size();
