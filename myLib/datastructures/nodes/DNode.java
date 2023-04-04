@@ -39,6 +39,4 @@ public class DNode {
     public DNode getBefore() {
         return before;
     }
-
-
 }
