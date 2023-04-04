@@ -1,36 +1,38 @@
 package myLib.datastructures.Linear;
-import myLib.datastructures.nodes.SNode;
+
+import myLib.datastructures.nodes.DNode;
 
 public class SLL {
     private int length;
-    private SNode head;
-    private SNode tail;
+    private DNode head;
+    private DNode tail;
 
     public SLL() {
         this.head = null;
         this.tail = null;
+        this.length = 0;
     }
 
-    public SLL(SNode node) {
+    public SLL(DNode node) {
         this.head = node;
         this.tail = node;
         this.length = 1;
     }
 
-    public void InsertHead(SNode node) {
+    public void InsertHead(DNode node) {
         node.setNext(this.head);
         this.head = node;
         length++;
     }
 
-    public void InsertTail(SNode node) {
+    public void InsertTail(DNode node) {
         if (this.head == null) {
             this.head = node;
             this.tail = node;
             length = 1;
             return;
         } else {
-            SNode current = this.head;
+            DNode current = this.head;
             while (current.getNext() != null) {
                 current = current.getNext();
             }
@@ -40,7 +42,7 @@ public class SLL {
         }
     }
 
-    public void Insert(SNode node, int position) {
+    public void Insert(DNode node, int position) {
         if (position > length+1) {
             System.out.println("Position out of bounds");
             return;
@@ -56,7 +58,7 @@ public class SLL {
             InsertTail(node);
             return;
         }
-        SNode current = this.head;
+        DNode current = this.head;
         for (int i = 2; i < position && current != null; i++) {
             current = current.getNext();
         }
@@ -68,7 +70,7 @@ public class SLL {
         length++;
     }
 
-    public void SortedInsert(SNode node) {
+    public void SortedInsert(DNode node) {
         if (this.head == null) {
             InsertHead(node);
             return;
@@ -79,7 +81,7 @@ public class SLL {
             Sort();
         }
 
-        SNode current;
+        DNode current;
         current = this.head;
         while (current.getNext() != null && current.getNext().getData() < node.getData()) {
             current = current.getNext();
@@ -90,8 +92,8 @@ public class SLL {
         length++;
     }
 
-    public SNode Search(SNode node) {
-        SNode current = this.head;
+    public DNode Search(DNode node) {
+        DNode current = this.head;
         while (current != null) {
             if (current == node) {
                 return current;
@@ -111,7 +113,7 @@ public class SLL {
             this.length--;
             return;
         }
-        SNode temp = this.head.getNext();
+        DNode temp = this.head.getNext();
         this.head = null;
         this.head = temp;
         this.length--;
@@ -124,7 +126,7 @@ public class SLL {
             this.length--;
             return;
         }
-        SNode current = this.head;
+        DNode current = this.head;
         while (current.getNext() != this.tail) {
             current = current.getNext();
         }
@@ -134,9 +136,9 @@ public class SLL {
         this.length--;
     }
 
-    public void Delete(SNode node) {
-        SNode deletedNode = Search(node);
-        if (deletedNode == null) {
+    public void Delete(DNode node) {
+        DNode deleteDNode = Search(node);
+        if (deleteDNode == null) {
             return;
         }
 
@@ -150,7 +152,7 @@ public class SLL {
             return;
         }
 
-        SNode current = this.head;
+        DNode current = this.head;
         while (current.getNext() != node) {
             current = current.getNext();
         }
@@ -164,18 +166,18 @@ public class SLL {
             return;
         }
 
-        SNode sortedList = null;
-        SNode current = this.head;
+        DNode sortedList = null;
+        DNode current = this.head;
 
         while(current != null) {
-            SNode next = current.getNext();
+            DNode next = current.getNext();
 
             if (sortedList == null || current.getData() < sortedList.getData()) {
                 current.setNext(sortedList);
                 sortedList = current;
             }
             else {
-                SNode search = sortedList;
+                DNode search = sortedList;
                 while (search.getNext() != null && current.getData() > search.getNext().getData()) {
                     // while search.next != null and current data is greater than temporary search node data
                     search = search.getNext();
@@ -195,7 +197,7 @@ public class SLL {
     }
 
     public boolean isSorted() {
-        SNode current = this.head;
+        DNode current = this.head;
         if (current == null || length == 1) {
             return true;
         }
@@ -212,7 +214,7 @@ public class SLL {
     public void Print() {
         System.out.println("List length: " + this.length);
         System.out.println("Sort status: "+ isSorted());
-        SNode current = this.head;
+        DNode current = this.head;
         if (current == null) {
             System.out.println("Empty List");
         } else {
@@ -225,11 +227,11 @@ public class SLL {
         }
     }
 
-    public SNode getHead() {
+    public DNode getHead() {
         return this.head;
     }
 
-    public SNode getTail() {
+    public DNode getTail() {
         return this.tail;
     }
 
