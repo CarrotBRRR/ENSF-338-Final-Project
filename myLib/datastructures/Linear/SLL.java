@@ -24,8 +24,19 @@ public class SLL {
     }
 
     public void InsertTail(SNode node) {
-        if (this.tail == null) {
-            InsertHead(node);
+        if (this.head == null) {
+            this.head = node;
+            this.tail = node;
+            length = 1;
+            return;
+        } else {
+            SNode current = this.head;
+            while (current.getNext() != null) {
+                current = current.getNext();
+            }
+            current.setNext(node);
+            this.tail = node;
+            length++;
         }
         this.tail.setNext(node);
         this.tail = node;
@@ -101,31 +112,30 @@ public class SLL {
         if (length == 1) {
             this.head = null;
             this.tail = null;
-            length--;
+            this.length--;
             return;
         }
         SNode temp = this.head.getNext();
         this.head = null;
         this.head = temp;
-        length--;
+        this.length--;
     }
 
     public void DeleteTail() {
         if (length == 1) {
             this.head = null;
             this.tail = null;
-            length--;
+            this.length--;
             return;
         }
         SNode current = this.head;
         while (current.getNext() != this.tail) {
             current = current.getNext();
         }
-
-        this.tail = current;
+        this.tail = null;
         current.setNext(null);
-        length--;
-
+        this.tail = current;
+        this.length--;
     }
 
     public void Delete(SNode node) {
@@ -216,4 +226,17 @@ public class SLL {
         System.out.println();
         System.out.println();
     }
+
+    public SNode getHead() {
+        return this.head;
+    }
+
+    public SNode getTail() {
+        return this.tail;
+    }
+
+    public int getLength() {
+        return this.length;
+    }
+
 }
