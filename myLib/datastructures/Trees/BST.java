@@ -1,7 +1,8 @@
 package myLib.datastructures.Trees;
 
+import java.util.Queue;
+import java.util.LinkedList;
 import myLib.datastructures.nodes.TNode;
-import myLib.datastructures.Linear.QueueLL;
 
 public class BST {
     private TNode root;
@@ -194,9 +195,13 @@ public class BST {
 
 
     public void printBF() {
-        queue = new QueueLL<TNode>; // something like this, framework
+        if (root == null) {
+            return;
+        }
+    
+        Queue<TNode> queue = new LinkedList<>();
         queue.add(root);
-        
+
         while (!queue.isEmpty()) {
             int levelSize = queue.size();
             for (int i = 0; i < levelSize; i++) {

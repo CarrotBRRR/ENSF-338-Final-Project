@@ -27,94 +27,136 @@ public class AVL extends BST {
                 AVL rightTree = new AVL(obj.getRight());
                 this.root.setRight(rightTree.getRoot());
             }
-            balance();
+            balance(root);
         }
     }
 
-    // Setters and Getters
-    public void setRoot(TNode root) {
-        this.root = root;
-        if (root.getLeft() != null || root.getRight() != null) {
-            balance();
-        }
-    }
-
+    // Getters and setters
     public TNode getRoot() {
         return this.root;
     }
 
-    // Helper functions to calculate balance factor
-    private int height(TNode node) {
+    public void setRoot(TNode root) {
+        if (root != null) {
+            this.root = new TNode(root.getData(), 0, null, null, null);
+            if (root.getLeft() != null) {
+                this.Insert(root.getLeft());
+            }
+            if (root.getRight() != null) {
+                this.Insert(root.getRight());
+            }
+        }
+    }
+    
+    public void balance(TNode node) {
+        if (node == null) {
+            return;
+        }
+        
+        int leftHeight = getHeight(node.getLeft());
+        int rightHeight = getHeight(node.getRight());
+
+        node.setBalance(leftHeight - rightHeight);
+
+
+        int balanceFactor = node.getBalance();
+        
+        if (balanceFactor > 0) {
+            if (node.getLeft().getBalance() < 0) {
+                rotateLeft(node.getLeft());
+            }
+            rotateRight(node);
+        } else if (balanceFactor < 0) {
+            if (node.getRight().getBalance() > 0) {
+                rotateRight(node.getRight());
+            }
+            rotateLeft(node);
+        }
+
+        leftHeight = getHeight(node.getLeft());
+        rightHeight = getHeight(node.getRight());
+
+        node.setBalance(leftHeight - rightHeight);
+        System.out.println("LH: " + leftHeight + ", RH: " + rightHeight);
+    }
+
+    public int getHeight(TNode node) {
         if (node == null) {
             return -1;
         }
-        return Math.max(height(node.getLeft()), height(node.getRight())) + 1;
+
+        return 1 + Math.max(getHeight(node.getLeft()), getHeight(node.getRight()));
+    }
+    
+    @Override
+    public void Insert(int value) {
+        TNode newNode = new TNode(value, 0, null, null, null);
+        Insert(newNode);
     }
 
-    private int balanceFactor(TNode node) {
-        if (node == null) {
-            return 0;
-        }
-        return height(node.getLeft()) - height(node.getRight());
-    }
-
-    // Helper function to balance the tree
-    private void balance() {
-        if (this.root == null) {
-            return;
-        }
-        int balanceFactor = balanceFactor(this.root);
-        if (balanceFactor > 1) {
-            if (balanceFactor(this.root.getLeft()) >= 0) {
-                this.root = rotateRight(this.root);
-            } else {
-                this.root.setLeft(rotateLeft(this.root.getLeft()));
-                this.root = rotateRight(this.root);
+    @Override
+    public void Insert(TNode node) {
+        if(root == null){
+            this.root = node;
+        } else {
+            TNode current = this.root;
+            TNode parent;
+            while (true) {
+                parent = current;
+                if (node.getData() < current.getData()) {
+                    current = current.getLeft();
+                    if (current == null) {
+                        parent.setLeft(node);
+                        node.setParent(parent);
+                        break;
+                    }
+                } 
+                else {
+                    current = current.getRight();
+                    if (current == null) {
+                        parent.setRight(node);
+                        node.setParent(parent);
+                        break;
+                    }
+                }
             }
-        } else if (balanceFactor < -1) {
-            if (balanceFactor(this.root.getRight()) <= 0) {
-                this.root = rotateLeft(this.root);
-            } else {
-                this.root.setRight(rotateRight(this.root.getRight()));
-                this.root = rotateLeft(this.root);
-            }
+            balance(root);
         }
     }
-
-    // Helper functions for rotation
-    private TNode rotateRight(TNode node) {
-        TNode newRoot = node.getLeft();
-        node.setLeft(newRoot.getRight());
-        newRoot.setRight(node);
-        return newRoot;
+    
+    @Override
+    public void Delete(int value) {
+        super.Delete(value);
+        balance(root);
     }
-
-    private TNode rotateLeft(TNode node) {
-        TNode newRoot = node.getRight();
-        node.setRight(newRoot.getLeft());
-        newRoot.setLeft(node);
-        return newRoot;
-    }
-
-    // Insertion methods
-    public void insert(int val) {
-        super.Insert(val);
-        balance();
-    }
-
-    public void insert(TNode node) {
-        super.Insert(node);
-        balance();
-    }
-
-    // Deletion method
-    public void delete(int val) {
-        TNode nodeToDelete = Search(val);
-        if (nodeToDelete == null) {
-            System.out.println("Value " + val + " not found in the tree.");
-            return;
+    
+    private void rotateLeft(TNode node) {
+        TNode rightChild = node.getRight();
+        TNode rightLeftChild = rightChild.getLeft();
+        
+        rightChild.setLeft(node);
+        node.setRight(rightLeftChild);
+        
+        node.setBalance(node.getBalance() - 1 - Math.max(rightChild.getBalance(), 0));
+        rightChild.setBalance(getHeight(rightChild.getLeft()) - getHeight(rightChild.getRight()));
+        
+        if (node == root) {
+            this.root = rightChild;
         }
-        super.Delete(nodeToDelete);
-        balance();
+    }
+    
+    private void rotateRight(TNode node) {
+        TNode leftChild = node.getLeft();
+        TNode leftRightChild = leftChild.getRight();
+        
+        leftChild.setRight(node);
+        node.setLeft(leftRightChild);
+        
+        node.setBalance( getHeight(node.getLeft()) - getHeight(node.getRight()) );
+        leftChild.setBalance(getHeight(leftChild.getLeft()) - getHeight(leftChild.getRight()));
+
+        if (node == root) {
+            this.root = leftChild;
+        }
     }
 }
