@@ -88,6 +88,8 @@ public class BST {
         if (nodeToDelete == null) {
             System.out.println("Value not found in the tree");
         } else {
+            System.out.println(nodeToDelete.getData() + " Found!");
+            System.out.println(nodeToDelete.getParent().getData() + " is my parent");
             Delete(nodeToDelete);
         }
     }
@@ -107,7 +109,7 @@ public class BST {
         }
     
         // Case 2: nodeToDelete has one child
-        else if (nodeToDelete.getLeft() == null ^ nodeToDelete.getRight() == null) {
+        else if (nodeToDelete.getLeft() == null || nodeToDelete.getRight() == null) {
             TNode child;
             if (nodeToDelete.getLeft() != null) {
                 child = nodeToDelete.getLeft();

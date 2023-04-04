@@ -22,6 +22,7 @@ public class AVL extends BST{
         super.getRoot().setBalance(getBalFactor(super.getRoot()));
         balance(super.getRoot());
     }
+    
     // Balance after deleting
     @Override
     public void Delete(TNode node){
@@ -58,7 +59,6 @@ public class AVL extends BST{
         }
 
         int balanceFactor = node.getBalance();
-        System.out.println("Balance Factor: " + balanceFactor);
 
         if (balanceFactor > 1) {
             if (node.getRight() != null && getBalFactor(node.getLeft()) < -1) {
@@ -82,7 +82,7 @@ public class AVL extends BST{
     private TNode rotateRight(TNode node) {
         TNode pivot = node.getLeft();
 
-        pivot.setParent(node.getParent());
+        pivot.setParent(node.getParent());     
         node.setParent(pivot);
 
         node.setLeft(pivot.getRight());
@@ -100,13 +100,13 @@ public class AVL extends BST{
         node.setBalance(getBalFactor(node));
         pivot.setBalance(getBalFactor(pivot));
 
-        System.out.println("Rotated right");
         return pivot;
     }
 
     // Perform a left rotation at the given node
     private TNode rotateLeft(TNode node) {
         TNode pivot = node.getRight();
+
         pivot.setParent(node.getParent());
         node.setParent(pivot);
 
@@ -125,7 +125,6 @@ public class AVL extends BST{
         node.setBalance(node.getBalance() - 1 - Math.max(0, pivot.getBalance()));
         pivot.setBalance(pivot.getBalance() - 1 + Math.min(0, node.getBalance()));
 
-        System.out.println("Rotated left");
         return pivot;
     }
 }
