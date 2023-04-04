@@ -1,11 +1,11 @@
 package myLib.datastructures.nodes;
 
 public class TNode {
-    private int data;
-    private TNode left;
-    private TNode right;
-    private TNode parent;
-    private int balance;
+    int data;
+    TNode left;
+    TNode right;
+    TNode parent;
+    int balance;
 
     // Constructors
     public TNode() {

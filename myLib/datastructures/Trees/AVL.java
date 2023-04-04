@@ -1,198 +1,131 @@
 package myLib.datastructures.Trees;
-
-import java.util.Queue;
-import java.util.LinkedList;
 import myLib.datastructures.nodes.TNode;
 
-public class AVL extends BST {
-    private TNode root;
-
-    // Constructors
-    public AVL() {
-        this.root = null;
+public class AVL extends BST{
+    
+    public AVL(){
+        super();
     }
 
-    public AVL(int val) {
-        this.root = new TNode(val, 0, null, null, null);
+    public AVL(int val){
+        super(val);
     }
-
+    
     public AVL(TNode obj) {
-        this.root = obj;
+        super(obj);
     }
 
-    // Getters and setters
-    public TNode getRoot() {
-        return this.root;
+    // Balance after inserting
+    @Override
+    public void Insert(TNode node){
+        super.Insert(node);
+        super.getRoot().setBalance(getBalFactor(super.getRoot()));
+        balance(super.getRoot());
+    }
+    // Balance after deleting
+    @Override
+    public void Delete(TNode node){
+        super.Delete(node);
+        super.getRoot().setBalance(getBalFactor(super.getRoot()));
+        balance(super.getRoot());
     }
 
-    public void setRoot(TNode root) {
-        if (root != null) {
-            this.root = new TNode(root.getData(), 0, null, null, null);
-            if (root.getLeft() != null) {
-                this.Insert(root.getLeft());
-            }
-            if (root.getRight() != null) {
-                this.Insert(root.getRight());
-            }
+    public int getHeight(TNode node){
+        if(node == null){
+            return -1;
+        }
+        int LH = getHeight(node.getLeft());
+        int RH = getHeight(node.getRight());
+        if(LH > RH){
+            return LH + 1;
+        } else if(LH < RH){
+            return RH + 1; 
+        } else {
+            return RH + 1;
         }
     }
 
-    // Balance
+    public int getBalFactor(TNode node){
+        int LH = getHeight(node.getLeft());
+        int RH = getHeight(node.getRight());
+        int result = LH - RH;
+        return result;
+    }
+
     public void balance(TNode node) {
         if (node == null) {
             return;
         }
 
         int balanceFactor = node.getBalance();
-        
+        System.out.println("Balance Factor: " + balanceFactor);
+
         if (balanceFactor > 1) {
-            if (node.getLeft() != null && node.getLeft().getBalance() < 0 ) {
-                node.setLeft( rotateLeft(node.getRight()) );
+            if (node.getRight() != null && getBalFactor(node.getLeft()) < -1) {
+                node.setLeft(rotateLeft(node.getLeft()));
             }
             rotateRight(node);
-            System.out.println("Rotated right");
+
         } else if (balanceFactor < -1) {
-            if (node.getRight() != null && node.getRight().getBalance() > 1) {
-                node.setRight( rotateRight(node.getRight()) );
+            if (node.getLeft() != null && getBalFactor(node.getRight()) > 1) {
+                node.setRight(rotateRight(node.getLeft()));
             }
             rotateLeft(node);
-            System.out.println("Rotated left");
+
         }
-
-        int leftHeight = getHeight(node.getLeft());
-        int rightHeight = getHeight(node.getRight());
-
-        node.setBalance(leftHeight - rightHeight);
-    }
-    
-    //getHeight method
-    public int getHeight(TNode node){
-        if (node == null) {
-            return -1;
-        }
-
-        return 1 + Math.max(getHeight(node.getLeft()), getHeight(node.getRight()));
-    }
-    
-    //Insert
-    @Override
-    public void Insert(int value) {
-        TNode newNode = new TNode(value, 0, null, null, null);
-        Insert(newNode);
+        
+        node.setBalance(getBalFactor(node));
     }
 
-    @Override
-    public void Insert(TNode node) {
-        if(root == null){
-            this.root = node;
-            System.out.println("Root init Data:" + root.getData());
-        } else {
-            TNode current = this.root;
-            TNode parent;
-            while (true) {
-                parent = current;
-                if (node.getData() < current.getData()) {
-                    current = current.getLeft();
-                    if (current == null) {
-                        parent.setLeft(node);
-                        node.setParent(parent);
-                        break;
-                    }
-                } 
-                else {
-                    current = current.getRight();
-                    if (current == null) {
-                        parent.setRight(node);
-                        node.setParent(parent);
-                        break;
-                    }
-                }
-            }       
-
-            int leftHeight = getHeight(node.getLeft());
-            int rightHeight = getHeight(node.getRight());
-            node.setBalance(leftHeight - rightHeight);
-            
-            System.out.println("Root Balance: " + root.getBalance());
-            balance(root);
-        }
-    }
-    
-    @Override
-    public void Delete(int value) {
-        super.Delete(value);
-        balance(root);
-    }
-    
     // Rotation
     // Perform a right rotation at the given node
     private TNode rotateRight(TNode node) {
         TNode pivot = node.getLeft();
+
         pivot.setParent(node.getParent());
-        node.setLeft(pivot.getRight());
-        if (node.getLeft() != null) {
-            node.getLeft().setParent(node);
-        }
-        pivot.setRight(node);
         node.setParent(pivot);
-        if (pivot.getParent() != null) {
-            if (pivot.getParent().getRight() == node) {
-                pivot.getParent().setRight(pivot);
-            } else {
-                pivot.getParent().setLeft(pivot);
-            }
+
+        node.setLeft(pivot.getRight());
+        pivot.setRight(node);
+
+
+        if(pivot.getRight() != null){
+            pivot.getRight().setParent(node);
         }
-        node.setBalance(node.getBalance() + 1 - Math.min(0, pivot.getBalance()));
-        pivot.setBalance(pivot.getBalance() + 1 + Math.max(0, node.getBalance()));
+
+        if(super.getRoot() == node){
+            super.setRoot(pivot);
+        }
+
+        node.setBalance(getBalFactor(node));
+        pivot.setBalance(getBalFactor(pivot));
+
+        System.out.println("Rotated right");
         return pivot;
     }
-    
 
     // Perform a left rotation at the given node
     private TNode rotateLeft(TNode node) {
         TNode pivot = node.getRight();
         pivot.setParent(node.getParent());
-        node.setRight(pivot.getLeft());
-        if (node.getRight() != null) {
-            node.getRight().setParent(node);
-        }
-        pivot.setLeft(node);
         node.setParent(pivot);
-        if (pivot.getParent() != null) {
-            if (pivot.getParent().getRight() == node) {
-                pivot.getParent().setRight(pivot);
-            } else {
-                pivot.getParent().setLeft(pivot);
-            }
+
+        node.setRight(pivot.getLeft());
+        pivot.setLeft(node);
+
+
+        if(pivot.getLeft() != null){
+            pivot.getLeft().setParent(node);
         }
+
+        if(super.getRoot() == node){
+            super.setRoot(pivot);
+        }
+
         node.setBalance(node.getBalance() - 1 - Math.max(0, pivot.getBalance()));
         pivot.setBalance(pivot.getBalance() - 1 + Math.min(0, node.getBalance()));
+
+        System.out.println("Rotated left");
         return pivot;
-    }
-
-    @Override
-    public void printBF() {
-        if (this.root == null) {
-            System.out.println("Tree is empty");
-            return;
-        }
-    
-        Queue<TNode> queue = new LinkedList<>();
-        queue.add(this.root);
-
-        while (!queue.isEmpty()) {
-            int levelSize = queue.size();
-            for (int i = 0; i < levelSize; i++) {
-                TNode currentNode = queue.poll();
-                System.out.print(currentNode.getData() + " ");
-                if (currentNode.getLeft() != null) {
-                    queue.add(currentNode.getLeft());
-                }
-                if (currentNode.getRight() != null) {
-                    queue.add(currentNode.getRight());
-                }
-            }
-            System.out.println();
-        }
     }
 }
