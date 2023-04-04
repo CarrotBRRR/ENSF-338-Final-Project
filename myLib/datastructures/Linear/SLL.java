@@ -40,6 +40,9 @@ public class SLL {
             this.tail = node;
             length++;
         }
+        this.tail.setNext(node);
+        this.tail = node;
+        length++;
     }
 
     public void Insert(DNode node, int position) {
@@ -65,9 +68,6 @@ public class SLL {
         if (current == null) {
             return;
         }
-        node.setNext(current.getNext());
-        current.setNext(node);
-        length++;
     }
 
     public void SortedInsert(DNode node) {
@@ -225,6 +225,8 @@ public class SLL {
                 i++;
             }
         }
+        System.out.println();
+        System.out.println();
     }
 
     public DNode getHead() {
