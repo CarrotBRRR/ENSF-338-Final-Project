@@ -23,10 +23,15 @@ public class treetest {
         AVL tree2 = new AVL();
 
         tree2.Insert(1);
+        tree2.printBF();
+        
         tree2.Insert(2);
-        tree2.Insert(3);
-        tree2.Insert(4);
+        tree2.printBF();
 
+        tree2.Insert(3);
+        tree2.printBF();
+
+        tree2.Insert(4);
         tree2.printBF();
 
     }
