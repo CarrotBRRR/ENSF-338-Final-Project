@@ -88,8 +88,6 @@ public class BST {
         if (nodeToDelete == null) {
             System.out.println("Value not found in the tree");
         } else {
-            System.out.println(nodeToDelete.getData() + " Found!");
-            System.out.println(nodeToDelete.getParent().getData() + " is my parent");
             Delete(nodeToDelete);
         }
     }
@@ -170,28 +168,28 @@ public class BST {
         return succ;
     }
 
-    // In-order traversal method
-    public String inOrder() {
-        String result = "";
-
-        result += inOrder(root.getLeft());
-        System.out.print(root.getData() + " ");
-        result += inOrder(root.getRight());
-        
-        return result;
+    // In-order print method
+    public String inOrder(){
+        String inOrderData = getInOrder(root);
+        System.out.println(inOrderData);
+        return inOrderData;
     }
-
-    public String inOrder(TNode node) {
+    
+    public String getInOrder(TNode node) {
         String result = "";
 
         if (node == null) {
-            return result;
+            return "";
+        }
+        if (node.getLeft() != null){
+            result += getInOrder(node.getLeft());
         }
 
-        result += inOrder(node.getLeft());
-        System.out.print(node.getData() + " ");
-        result += inOrder(node.getRight());
-
+        result += String.valueOf(node.getData()) + " ";
+        
+        if (node.getRight() != null){
+            result += getInOrder(node.getRight());
+        }
         return result;
     }
 
@@ -208,13 +206,13 @@ public class BST {
         while (!queue.isEmpty()) {
             int levelSize = queue.size();
             for (int i = 0; i < levelSize; i++) {
-                TNode currentNode = queue.poll();
-                System.out.print(currentNode.getData() + " ");
-                if (currentNode.getLeft() != null) {
-                    queue.add(currentNode.getLeft());
+                TNode current = queue.poll();
+                System.out.print(current.getData() + " ");
+                if (current.getLeft() != null) {
+                    queue.add(current.getLeft());
                 }
-                if (currentNode.getRight() != null) {
-                    queue.add(currentNode.getRight());
+                if (current.getRight() != null) {
+                    queue.add(current.getRight());
                 }
             }
             System.out.println();

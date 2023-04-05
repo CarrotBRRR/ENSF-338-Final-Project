@@ -1,4 +1,4 @@
-package myLib.datastructures.Tests;
+package myLib.datastructures.Tests.TreeTests;
 
 import myLib.datastructures.Trees.*;
 
@@ -17,21 +17,22 @@ public class treetest {
         tree.Insert(7);
         tree.Insert(5);
         tree.Insert(3);
+        tree.Insert(2);
 
         System.out.println("inOrder test:");
-        tree.inOrder();
-        System.out.println();       
+        tree.inOrder();     
         System.out.println("printBF test:");
         tree.printBF();
 
-        System.out.println("Delete Node w/ 2 Child");
+        System.out.println("Delete Node w/ 2 Child (6)");
         tree.Delete(6);
         tree.printBF();
-        System.out.println("Delete Node w/ 1 Child");
+        System.out.println("Delete Node w/ 1 Child (7)");
         tree.Delete(7);
         tree.printBF();
-        System.out.println("Delete Leaf");
+        System.out.println("Delete Leaf (5)");
         tree.Delete(5);
+        tree.printBF();
 
         System.out.println("AVL TEST 1234");
         AVL tree2 = new AVL();
@@ -40,7 +41,6 @@ public class treetest {
         tree2.Insert(2);     
         tree2.Insert(3);
         tree2.Insert(4);
-
         tree2.printBF();
 
         System.out.println("AVL TEST 4321");
@@ -68,17 +68,29 @@ public class treetest {
 
         System.out.println("AVL TEST DELETE:");
         AVL tree5 = new AVL();
-        tree5.Insert(5);
-        tree5.Insert(4);
-        tree5.Insert(3);
+        tree5.Insert(6);
         tree5.Insert(2);
+        tree5.Insert(8);
         tree5.Insert(1);
-        System.out.println("AVL Before Deletion:");
+        tree5.Insert(4);
+        tree5.Insert(7);
+        tree5.Insert(9);
+        System.out.println("BEFORE DELETE");
         tree5.printBF();
 
-        tree5.Delete(4);
-        System.out.println("AVL After Deletion:");
+        System.out.println("Delete Node w/ 2 Child (2)");
+        tree5.Delete(2);
         tree5.printBF();
+
+        System.out.println("Delete Node w/ 1 Child (4)");
+        tree5.Delete(4);
+        tree5.printBF();
+
+        System.out.println("Delete Leaf Node (9)");
+
+        tree5.Delete(9);
+        tree5.printBF();
+
 
     }
 }
