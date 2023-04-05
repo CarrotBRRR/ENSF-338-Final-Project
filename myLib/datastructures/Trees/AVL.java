@@ -61,14 +61,14 @@ public class AVL extends BST{
         int balanceFactor = node.getBalance();
 
         if (balanceFactor > 1) {
-            if (node.getRight() != null && getBalFactor(node.getLeft()) < -1) {
+            if (getBalFactor(node.getLeft()) < 0) {
                 node.setLeft(rotateLeft(node.getLeft()));
             }
             rotateRight(node);
 
         } else if (balanceFactor < -1) {
-            if (node.getLeft() != null && getBalFactor(node.getRight()) > 1) {
-                node.setRight(rotateRight(node.getLeft()));
+            if (getBalFactor(node.getRight()) > 0) {
+                node.setRight(rotateRight(node.getRight()));
             }
             rotateLeft(node);
 
@@ -87,11 +87,6 @@ public class AVL extends BST{
 
         node.setLeft(pivot.getRight());
         pivot.setRight(node);
-
-
-        if(pivot.getRight() != null){
-            pivot.getRight().setParent(node);
-        }
 
         if(super.getRoot() == node){
             super.setRoot(pivot);
@@ -112,11 +107,6 @@ public class AVL extends BST{
 
         node.setRight(pivot.getLeft());
         pivot.setLeft(node);
-
-
-        if(pivot.getLeft() != null){
-            pivot.getLeft().setParent(node);
-        }
 
         if(super.getRoot() == node){
             super.setRoot(pivot);
