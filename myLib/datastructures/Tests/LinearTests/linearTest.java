@@ -17,6 +17,7 @@ public class linearTest {
         test.Enqueue(3);
         test.Enqueue(4);
         test.Enqueue(node5);
+        test.Enqueue(null);
         int a = test.getLength();
         System.out.println(a);
         test.Print();

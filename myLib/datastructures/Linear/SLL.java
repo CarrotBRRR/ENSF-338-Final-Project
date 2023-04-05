@@ -33,6 +33,9 @@ public class SLL {
     }
 
     public void InsertTail(DNode node) {
+        if (node == null) {
+            return;
+        }
         if (this.head == null) {
             this.head = node;
             this.tail = node;
