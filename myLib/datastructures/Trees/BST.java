@@ -1,9 +1,7 @@
 package myLib.datastructures.Trees;
 
-import java.util.Queue;
-
-import java.util.LinkedList;
 import myLib.datastructures.nodes.TNode;
+import myLib.datastructures.Linear.QueueLL;
 
 public class BST {
     private TNode root;
@@ -208,19 +206,20 @@ public class BST {
             return result;
         }
     
-        Queue<TNode> queue = new LinkedList<>();
-        queue.add(this.root);
+        QueueLL queue = new QueueLL();
+        queue.Enqueue(this.root.getData());
 
-        while (!queue.isEmpty()) {
-            int levelSize = queue.size();
+        while (!queue.Empty()) {
+            int levelSize = queue.getLength();
+
             for (int i = 0; i < levelSize; i++) {
-                TNode current = queue.poll();
+                TNode current = Search(queue.Dequeue());
                 result += current.getData() + " ";
                 if (current.getLeft() != null) {
-                    queue.add(current.getLeft());
+                    queue.Enqueue(current.getLeft().getData());
                 }
                 if (current.getRight() != null) {
-                    queue.add(current.getRight());
+                    queue.Enqueue(current.getRight().getData());
                 }
             }
             result = result.substring(0, result.length() - 1); // remove space after last entry
