@@ -1,5 +1,4 @@
 package myLib.datastructures.Linear;
-import javax.naming.NameAlreadyBoundException;
 
 // extends SLL
 import myLib.datastructures.nodes.DNode;
@@ -34,6 +33,15 @@ public class QueueLL extends SLL{
     public DNode Search(DNode node) {
         return super.Search(node);
     }
+
+    @Override
+    public DNode getHead() {return null;}
+
+    @Override
+    public DNode getTail() { return null;}
+
+    @Override
+    public int getLength() {return super.getLength();}
 
     @Override
     public DNode DeleteHead() {return null;}
