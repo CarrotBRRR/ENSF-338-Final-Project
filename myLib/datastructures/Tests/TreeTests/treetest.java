@@ -19,8 +19,8 @@ public class treetest {
         tree.Insert(3);
         tree.Insert(2);
 
-        System.out.println("inOrder test:");
-        tree.inOrder();     
+        System.out.println("printInOrder test:");
+        tree.printInOrder();     
         System.out.println("printBF test:");
         tree.printBF();
 

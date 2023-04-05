@@ -169,7 +169,7 @@ public class BST {
     }
 
     // In-order print method
-    public String inOrder(){
+    public String printInOrder(){
         String inOrderData = getInOrder(root);
         System.out.println(inOrderData);
         return inOrderData;
