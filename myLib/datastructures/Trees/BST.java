@@ -1,6 +1,7 @@
 package myLib.datastructures.Trees;
 
 import java.util.Queue;
+
 import java.util.LinkedList;
 import myLib.datastructures.nodes.TNode;
 
@@ -193,11 +194,18 @@ public class BST {
         return result;
     }
 
+    public String printBF(){
+        String BFOrderData = getBFOrder(root);
+        System.out.println(BFOrderData);
+        return BFOrderData;
+    }
 
-    public void printBF() {
-        if (this.root == null) {
+
+    public String getBFOrder(TNode node) {
+        String result = "";
+        if (node == null) {
             System.out.println("Tree is empty");
-            return;
+            return result;
         }
     
         Queue<TNode> queue = new LinkedList<>();
@@ -207,7 +215,7 @@ public class BST {
             int levelSize = queue.size();
             for (int i = 0; i < levelSize; i++) {
                 TNode current = queue.poll();
-                System.out.print(current.getData() + " ");
+                result += current.getData() + " ";
                 if (current.getLeft() != null) {
                     queue.add(current.getLeft());
                 }
@@ -215,7 +223,9 @@ public class BST {
                     queue.add(current.getRight());
                 }
             }
-            System.out.println();
+            result = result.substring(0, result.length() - 1); // remove space after last entry
+            result += "\n";
         }
+        return result.substring(0, result.length() - 1); // remove extra \n
     }
 }
