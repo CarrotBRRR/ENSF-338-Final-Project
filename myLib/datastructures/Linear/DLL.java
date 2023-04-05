@@ -1,7 +1,4 @@
 package myLib.datastructures.Linear;
-
-import java.sql.SQLXML;
-
 import myLib.datastructures.nodes.DNode;
 
 public class DLL{
@@ -38,6 +35,7 @@ public class DLL{
         if (this.head == null) {
             this.head = node;
             this.tail = node;
+            this.length++;
             return;
         } else {
             DNode current = this.head;
@@ -181,44 +179,17 @@ public class DLL{
         if (this.head == null || this.head.getNext() == null) {
             return;
         }
-
-
         DNode current = this.head.getNext();
         while(current != null) {
-            DNode prev = current.getBefore();
+            // next is to specify which node to try and sort next
             DNode next = current.getNext();
             //while prev.data > current.data, then make prev into current
-            while(prev != null && prev.getData() > current.getData()){
-                DNode temp = prev.getBefore();
-
-                // set prev.next to current.next
-                prev.setNext(current.getNext());
-
-                // set prev.before to current
-                prev.setBefore(current);
-
-                //set current.next to prev
-                current.setNext(prev);
-
-                //set current.before to prev.befor
-                current.setBefore(temp);
-
-                current = prev;
-            }
-            if (current.getBefore() == null) {
-                this.head = current;
-            } else {
-                current.setNext(next);
-                next.setBefore(current);
+            while(current.getBefore() != null && current.getBefore().getData() > current.getData()){
+                // swapNodes is just to swap two nodes with each other
+                swapNodes(current.getBefore(), current);
             }
             current = next;
         }
-        // used to find tail
-        current = this.head;
-        while(current.getNext() != null) {
-            current = current.getNext();
-        }
-        this.tail = current;
     }
 
     public void Clear() {
@@ -228,11 +199,11 @@ public class DLL{
     }
 
     public boolean isSorted() {
-        if (length == 0 || length == 1) {
+        if (this.head == null || this.head.getNext() == null) {
             return true;
         }
         DNode current = this.head.getNext();
-        while (current.getNext() != null) {
+        while (current != null) {
             if (current.getBefore().getData() > current.getData() ) {
                 return false;
             }
@@ -243,7 +214,7 @@ public class DLL{
 
     public void Print() {
         System.out.println("List length: " + this.length);
-        System.out.println("Sort status: "+ isSorted());
+        System.out.println("Sort status: " + isSorted());
         DNode current = this.head;
         if (current == null) {
             System.out.println("Empty List");
@@ -255,6 +226,29 @@ public class DLL{
                 i++;
             }
         }
+    }
+
+    private void swapNodes(DNode node1, DNode node2) {
+        DNode tempPrev = node1.getBefore();
+        DNode tempNext = node2.getNext();
+
+        if (tempPrev != null) {
+            tempPrev.setNext(node2);
+        } else {
+            head = node2;
+        }
+
+        if (tempNext != null) {
+            tempNext.setBefore(node1);
+        } else {
+            tail = node1;
+        }
+
+        node1.setNext(tempNext);
+        node2.setBefore(tempPrev);
+
+        node2.setNext(node1);
+        node1.setBefore(node2);
     }
 
     public DNode getTail() {
