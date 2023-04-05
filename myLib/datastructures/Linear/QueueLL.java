@@ -1,4 +1,6 @@
 package myLib.datastructures.Linear;
+import javax.naming.NameAlreadyBoundException;
+
 // extends SLL
 import myLib.datastructures.nodes.DNode;
 
@@ -10,6 +12,10 @@ public class QueueLL extends SLL{
 
     public QueueLL(DNode node) {
         super(node);
+    }
+
+    public QueueLL(int num) {
+        super(num);
     }
 
     @Override
@@ -30,7 +36,7 @@ public class QueueLL extends SLL{
     }
 
     @Override
-    public void DeleteHead() {}
+    public DNode DeleteHead() {return null;}
 
     @Override
     public void DeleteTail() {}
@@ -52,8 +58,13 @@ public class QueueLL extends SLL{
         super.InsertTail(node);
     }
 
-    public void Dequeue() {
-        super.DeleteHead();
+    public void Enqueue(int num) {
+        DNode node = new DNode(num);
+        super.InsertTail(node);
+    }
+
+    public int Dequeue() {
+        return super.DeleteHead().getData();
     }
     
     public DNode Peek() {

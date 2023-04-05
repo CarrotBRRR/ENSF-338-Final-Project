@@ -19,6 +19,13 @@ public class SLL {
         this.length = 1;
     }
 
+    public SLL(int num) {
+        DNode node = new DNode(num);
+        this.head = node;
+        this.tail = node;
+        this.length = 1;
+    }
+
     public void InsertHead(DNode node) {
         node.setNext(this.head);
         this.head = node;
@@ -100,20 +107,22 @@ public class SLL {
         return null;
     }
 
-    public void DeleteHead() {
+    public DNode DeleteHead() {
         if (this.head == null) {
-            return;
+            return null;
         }
         if (length == 1) {
-            this.head = null;
-            this.tail = null;
+            DNode temp = this.head;
+            temp.setNext(null);
             this.length--;
-            return;
+            return temp;
         }
         DNode temp = this.head.getNext();
-        this.head = null;
+        DNode returnNode = this.head;
+        this.head.setNext(null);
         this.head = temp;
         this.length--;
+        return returnNode;
     }
 
     public void DeleteTail() {
