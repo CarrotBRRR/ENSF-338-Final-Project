@@ -117,6 +117,8 @@ public class SLL {
         if (length == 1) {
             DNode temp = this.head;
             temp.setNext(null);
+            this.head = null;
+            this.tail = null;
             this.length--;
             return temp;
         }
