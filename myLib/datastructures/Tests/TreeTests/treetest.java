@@ -91,6 +91,25 @@ public class treetest {
         tree5.Delete(9);
         tree5.printBF();
 
+        BST tree6 = new BST();
+
+        tree6.Insert(1);
+        tree6.Insert(2);
+        tree6.Insert(3);
+        tree6.Insert(4);
+        tree6.Insert(5);
+        tree6.Insert(6);
+        tree6.Insert(7);
+        tree6.Insert(8);
+        tree6.Insert(9);
+
+        System.out.println("FULL TREE BALANCING ALGORITHM TEST");
+        System.out.println("Before Balancing");
+        tree6.printBF();
+        AVL tree7 = new AVL(tree6.getRoot());
+
+        System.out.println("After Balancing");
+        tree7.printBF();
 
     }
 }
