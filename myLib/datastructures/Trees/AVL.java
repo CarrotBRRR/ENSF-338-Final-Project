@@ -13,6 +13,13 @@ public class AVL extends BST{
     
     public AVL(TNode obj) {
         super(obj);
+        super.getRoot().setBalance(getBalFactor(super.getRoot()));
+        while(true){
+            balance(super.getRoot());
+            if(getBalFactor(super.getRoot()) > -1 && getBalFactor(super.getRoot())< 1){
+                break;
+            }
+        }
     }
 
     // Balance after inserting
@@ -30,7 +37,7 @@ public class AVL extends BST{
         super.getRoot().setBalance(getBalFactor(super.getRoot()));
         balance(super.getRoot());
     }
-
+    // getHeight
     public int getHeight(TNode node){
         if(node == null){
             return -1;
@@ -45,14 +52,15 @@ public class AVL extends BST{
             return RH + 1;
         }
     }
-
+    // Calculate Balance from Left Height - Right Height
     public int getBalFactor(TNode node){
         int LH = getHeight(node.getLeft());
         int RH = getHeight(node.getRight());
         int result = LH - RH;
         return result;
     }
-
+    
+    // Balance Function
     public void balance(TNode node) {
         if (node == null) {
             return;
