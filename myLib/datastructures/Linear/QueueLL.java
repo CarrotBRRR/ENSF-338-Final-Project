@@ -44,7 +44,7 @@ public class QueueLL extends SLL{
     public int getLength() {return super.getLength();}
 
     @Override
-    public DNode DeleteHead() {return null;}
+    public void DeleteHead() {}
 
     @Override
     public void DeleteTail() {}
@@ -72,7 +72,9 @@ public class QueueLL extends SLL{
     }
 
     public int Dequeue() {
-        return super.DeleteHead().getData();
+        int data = super.getHead().getData();
+        super.DeleteHead();
+        return data;
     }
     
     public DNode Peek() {

@@ -110,24 +110,21 @@ public class SLL {
         return null;
     }
 
-    public DNode DeleteHead() {
+    public void DeleteHead() {
         if (this.head == null) {
-            return null;
+            return;
         }
         if (length == 1) {
-            DNode temp = this.head;
-            temp.setNext(null);
             this.head = null;
             this.tail = null;
             this.length--;
-            return temp;
+            return;
         }
         DNode temp = this.head.getNext();
-        DNode returnNode = this.head;
         this.head.setNext(null);
         this.head = temp;
         this.length--;
-        return returnNode;
+        return;
     }
 
     public void DeleteTail() {
