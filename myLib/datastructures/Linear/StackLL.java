@@ -31,13 +31,13 @@ public class StackLL extends SLL{
     }
 
     @Override
-    public void DeleteHead() {}
+    public DNode DeleteHead() {return null;}
 
     @Override
-    public void DeleteTail() {}
+    public DNode DeleteTail() {return null;}
 
     @Override
-    public void Delete(DNode node) {}
+    public DNode Delete(DNode node) {return null;}
 
     @Override
     public void Sort() {}

@@ -11,6 +11,7 @@ public class DLL{
         this.tail = null;
         this.length = 0;
     }
+
     
     public DLL(DNode node) {
         this.head = node;
@@ -18,8 +19,12 @@ public class DLL{
         this.length = 1;
     }
     
+
     public void InsertHead(DNode node) {
-        if(this.head == null) {
+        if (node == null) {
+            return;
+        }
+        if(this.length == 0) {
             this.head = node;
             this.tail = node;
             this.length = 1;
@@ -31,8 +36,13 @@ public class DLL{
         length++;
     }
 
+
     public void InsertTail(DNode node) {
-        if (this.head == null) {
+        if (node == null) {
+            return;
+        }
+
+        if (this.length == 0) {
             this.head = node;
             this.tail = node;
             this.length++;
@@ -49,7 +59,12 @@ public class DLL{
         }
     }
 
+
     public void Insert(DNode node, int position) {
+        if (node == null) {
+            return;
+        }
+
         if (position > length+1) {
             System.out.println("Position out of bounds");
             return;
@@ -79,6 +94,7 @@ public class DLL{
         length++;
     }
 
+
     public void SortedInsert(DNode node) {
         if (this.head == null) {
             InsertHead(node);
@@ -103,6 +119,7 @@ public class DLL{
         length++;
     }
 
+
     public DNode Search(DNode node) {
         DNode current = this.head;
         while (current != null) {
@@ -114,66 +131,83 @@ public class DLL{
         return null;
     }
 
-    public void DeleteHead() {
+
+    public DNode DeleteHead() {
         if (this.head == null) {
-            return;
+            return null;
         }
+
+        DNode returnHead = this.head;
         if (length == 1) {
             this.head = null;
             this.tail = null;
             length--;
-            return;
+            return returnHead;
         }
+
         // temp is new head
         DNode temp = this.head.getNext();
-        this.head = null;
+        this.head.setNext(null);
         this.head = temp;
         this.head.setBefore(null);
         this.length--;
+        return returnHead;
     }
 
-    public void DeleteTail() {
+
+    public DNode DeleteTail() {
+        if (this.head == null) {
+            return null;
+        }
+
+        DNode returnTail = this.tail;
         if (length == 1) {
             this.head = null;
             this.tail = null;
             this.length--;
-            return;
+            return null;
         }
         DNode current = this.head;
         while (current.getNext() != this.tail) {
             current = current.getNext();
         }
-        this.tail = null;
+        this.tail.setBefore(null);;
         current.setNext(null);
         this.tail = current;
         this.length--;
+        return returnTail;
     }
 
-    public void Delete(DNode node) {
-        DNode deleteDNode = Search(node);
-        if (deleteDNode == null) {
-            return;
+
+    public DNode Delete(DNode node) {
+        DNode deleteNode = Search(node);
+        if (deleteNode == null) {
+            return null;
         }
 
         if (node == this.head) {
-            DeleteHead();
-            return;
+            return DeleteHead();
         }
 
         if (node == this.tail) {
-            DeleteTail();
-            return;
+            return DeleteTail();
         }
 
         DNode current = this.head;
         while (current.getNext() != node) {
             current = current.getNext();
         }
+
         // current is the node before the to-be-deleted node
         current.setNext(node.getNext());
         node.getNext().setBefore(current);
         this.length--;
+
+        deleteNode.setNext(null);
+        deleteNode.setBefore(null);
+        return deleteNode;
     }
+
 
     public void Sort() {
         if (this.head == null || this.head.getNext() == null) {
@@ -192,25 +226,13 @@ public class DLL{
         }
     }
 
+
     public void Clear() {
         while (this.head != null) {
             DeleteHead();
         }
     }
 
-    public boolean isSorted() {
-        if (this.head == null || this.head.getNext() == null) {
-            return true;
-        }
-        DNode current = this.head.getNext();
-        while (current != null) {
-            if (current.getBefore().getData() > current.getData() ) {
-                return false;
-            }
-            current = current.getNext();
-        }
-        return true;
-    }
 
     public void Print() {
         System.out.println("List length: " + this.length);
@@ -220,12 +242,16 @@ public class DLL{
             System.out.println("Empty List");
         } else {
             int i = 1;
-            while (current != null) {
+            while (current != this.tail) {
                 System.out.println("Index : " + i + " | Data : " + current.getData());
                 current = current.getNext();
                 i++;
             }
+            if (this.length != 1) {
+                System.out.println("Index : " + i + " | Data : " + current.getData());
+            }
         }
+        System.out.println();
     }
 
     private void swapNodes(DNode node1, DNode node2) {
@@ -251,6 +277,21 @@ public class DLL{
         node1.setBefore(node2);
     }
 
+    public boolean isSorted() {
+        if (this.head == null || this.head.getNext() == null) {
+            return true;
+        }
+        DNode current = this.head.getNext();
+        while (current != null) {
+            if (current.getBefore().getData() > current.getData() ) {
+                return false;
+            }
+            current = current.getNext();
+        }
+        return true;
+    }
+
+    /* getters */
     public DNode getTail() {
         return this.tail;
     }

@@ -67,24 +67,27 @@ public class CSLL extends SLL{
     }
 
     @Override
-    public void DeleteHead() {
+    public DNode DeleteHead() {
         super.getTail().setNext(null);
-        super.DeleteHead();
+        DNode returnNode = super.DeleteHead();
         super.getTail().setNext(super.getHead());
+        return returnNode;
     }
 
     @Override
-    public void DeleteTail() {
+    public DNode DeleteTail() {
         super.getTail().setNext(null);
-        super.DeleteTail();
+        DNode returnNode = super.DeleteTail();
         super.getTail().setNext(super.getHead());
+        return returnNode;
     }
 
     @Override
-    public void Delete(DNode node) {
+    public DNode Delete(DNode node) {
         super.getTail().setNext(null);
-        super.Delete(node);
+        DNode returnNode = super.Delete(node);
         super.getTail().setNext(super.getHead());
+        return returnNode;
     }
 
     @Override
@@ -113,14 +116,5 @@ public class CSLL extends SLL{
     public int getLength() {
         return super.getLength();
     }
-
-    @Override
-    public void setTail(DNode node) {
-    }
-
-    @Override
-    public void setHead(DNode node) {
-    }
-
 
 }
