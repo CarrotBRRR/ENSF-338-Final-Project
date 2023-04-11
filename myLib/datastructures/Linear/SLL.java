@@ -254,6 +254,10 @@ public class SLL {
             System.out.println("Empty List");
         } else {
             int i = 1;
+            if (this.length == 1) {
+                System.out.println("Index : " + i + " | Data : " + current.getData());
+                return;
+            }
             while (current != this.tail) {
                 System.out.println("Index : " + i + " | Data : " + current.getData());
                 current = current.getNext();
