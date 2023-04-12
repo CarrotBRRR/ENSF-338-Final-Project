@@ -99,25 +99,24 @@ public class SLL {
             Sort();
         }
 
-        if (node.getData() < this.head.getData()) {
-            // essentially setting a new head
+        if (this.head.getData() > node.getData()) {
             InsertHead(node);
             return;
         }
-        if (node.getData() > this.tail.getData()) {
-            // essentially setting a new tail
+
+        if (this.tail.getData() < node.getData()) {
             InsertTail(node);
             return;
         }
 
-        DNode current;
-        current = this.head.getNext();
-        while (current != this.tail && current.getData() < node.getData()) {
+        DNode current = this.head;
+        while (current.getNext() != null && current.getNext().getData() < node.getData()) {
             current = current.getNext();
         }
         node.setNext(current.getNext());
         current.setNext(node);
         length++;
+
     }
 
     public DNode Search(DNode node) {
@@ -189,7 +188,7 @@ public class SLL {
             return DeleteHead();
         }
 
-        if (node == this.head) {
+        if (node == this.tail) {
             return DeleteTail();
         }
 
@@ -203,7 +202,6 @@ public class SLL {
         deleteNode.setNext(null);
         return deleteNode;
     }
-
 
     public void Sort() {
         if (this.head == null) {
