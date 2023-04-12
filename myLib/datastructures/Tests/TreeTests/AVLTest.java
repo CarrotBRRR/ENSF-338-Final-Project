@@ -25,14 +25,17 @@ public class AVLTest {
         AVL test2 = new AVL(10);
         TNode root = tree.getRoot();
         AVL test3 = new AVL(root);
-        
+        // Test AVL(int val)
         assertEquals(10, test2.getRoot().getData());
+        // Test AVL(Tnode node)
         assertEquals(tree.printBF(), test3.printBF());
+        // Test AVL()
         assertNull(test.getRoot());
     }
 
     @Test
     public void testGetters(){
+        // Test getRoot
         AVL test = new AVL();
         test.setRoot(tree.getRoot());
         assertEquals(test.getRoot(), tree.getRoot());
@@ -47,9 +50,16 @@ public class AVLTest {
             BSTTree.Insert(new TNode(30, 0, null, null, null));
             BSTTree.Insert(new TNode(40, 0, null, null, null));
             BSTTree.Insert(new TNode(50, 0, null, null, null));
-
+            String expected = BSTTree.printInOrder();
+            
+            // Set root of tree to unbalanced BST
             tree.setRoot(BSTTree.getRoot());
-            String expected = "30\n20 40\n10 50";
+
+            // Test if values in tree are the same
+            assertEquals(expected, tree.printInOrder());
+
+            // Check Balanced
+            expected = "30\n20 40\n10 50";
             String actual = tree.printBF();
             assertEquals(expected, actual);
     }
