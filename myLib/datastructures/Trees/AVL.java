@@ -22,6 +22,12 @@ public class AVL extends BST{
         }
     }
 
+    @Override
+    public void setRoot(TNode node){
+        AVL temp = new AVL(node);
+        super.setRoot(temp.getRoot());
+    }
+
     // Balance after inserting
     @Override
     public void Insert(TNode node){
