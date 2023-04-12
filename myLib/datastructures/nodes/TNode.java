@@ -67,8 +67,10 @@ public class TNode {
     }
 
     // Print method
-    public void print() {
-        System.out.println("Data: " + this.data + ", Balance: " + this.balance);
+    public String print() {
+        String result = "Data: " + this.data + ", Balance: " + this.balance;
+        System.out.println(result);
+        return result;
     }
 
     // toString method

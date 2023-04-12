@@ -31,13 +31,17 @@ public class BSTTest {
         TNode root = tree.getRoot();
         BST test3 = new BST(root);
         
+        // Test BST(int val)
         assertEquals(10, test2.getRoot().getData());
+        // Test BST(TNode node)
         assertEquals(tree.printBF(), test3.printBF());
+        // Test BST()
         assertNull(test.getRoot());
     }
 
     @Test
     public void testSettersAndGetters(){
+        // Test setRoot
         TNode test = new TNode(1, 0, null, null, null);
         tree.setRoot(test);
         TNode node = tree.getRoot();
@@ -89,18 +93,25 @@ public class BSTTest {
 
     @Test
     public void testSearch() {
+        // Test Search
         TNode node = tree.Search(6);
         assertNotNull(node);
         assertEquals(6, node.getData());
+
+        // Test Searching for something not in the tree
+        TNode node2 = tree.Search(69);
+        assertNull(node2);
     }
 
     @Test
     public void testPrintInOrder() {
+        // Testing Printin in Order
         assertEquals("1 3 4 6 7 8 10 13 14", tree.printInOrder());
     }
 
     @Test
     public void testPrintBF() {
+        // Testing Print Breadth First
         assertEquals("8\n3 10\n1 6 14\n4 7 13", tree.printBF());
     }
 }
