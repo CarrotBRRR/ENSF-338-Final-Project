@@ -1,4 +1,6 @@
 package myLib.datastructures.Tests.LinearTests;
+import org.junit.internal.runners.TestMethod;
+
 import myLib.datastructures.Linear.*;
 import myLib.datastructures.nodes.DNode;
 public class linearTest {
@@ -33,6 +35,8 @@ public class linearTest {
         } else {
             System.out.println("Parametized SLL constructor test failed...");
         }
+
+        testSLL1.Clear();
 
         // InsertHead test
         testSLL0.InsertHead(node1);
@@ -92,7 +96,127 @@ public class linearTest {
 
         testSLL0.Clear();
 
+        // SortedInsert Method Tests
+        testSLL0.SortedInsert(node1);
+        if (testSLL0.getHead() == node1 && testSLL0.getTail() == node1 && testSLL0.getHead().getNext() == null) {
+            System.out.println("SLL SortedInsert method test1 passed...");
+        } else {
+            System.out.println("SLL SortedInsert method test1 failed...");
+        }
+
+        testSLL0.SortedInsert(node9);
+        if (testSLL0.getHead() == node1 && testSLL0.getTail() == node9) {
+            System.out.println("SLL SortedInsert method test2 passed...");
+        } else {
+            System.out.println("SLL SortedInsert method test2 failed...");
+        }
+
+        testSLL0.InsertTail(node3);
+        testSLL0.InsertTail(node2);
+        testSLL0.InsertTail(node5);
+        testSLL0.SortedInsert(node4);
+
+        if (testSLL0.getHead() == node1 && testSLL0.getTail() == node9 && testSLL0.getHead().getNext().getNext().getNext() == node4) {
+            System.out.println("SLL SortedInsert method test3 passed...");
+        } else {
+            System.out.println("SLL SortedInsert method test3 failed...");
+        }
+
+        testSLL0.SortedInsert(node0);
+        if (testSLL0.getHead() == node0 && testSLL0.getTail() == node9) {
+            System.out.println("SLL SortedInsert method test4 passed...");
+        } else {
+            System.out.println("SLL SortedInsert method test4 failed...");
+        }
+
+        testSLL0.SortedInsert(node10);
+        if (testSLL0.getHead() == node0 && testSLL0.getTail() == node10) {
+            System.out.println("SLL SortedInsert method test5 passed...");
+        } else {
+            System.out.println("SLL SortedInsert method test5 failed...");
+        }
+
         
+        // Sort Method Tests
+        DNode searchSLL1 = testSLL0.Search(node1);
+        if (searchSLL1 == node1) {
+            System.out.println("SLL Search method test1 passed...");
+        } else {
+            System.out.println("SLL Search method test1 failed...");
+        }
+
+        DNode searchSLL2 = testSLL0.Search(node8);
+        if (searchSLL2 == null) {
+            System.out.println("SLL Search method test2 passed...");
+        } else {
+            System.out.println("SLL Search method test2 failed...");
+        }
+
+
+        // DeleteHead test
+        testSLL0.DeleteHead();
+        if (testSLL0.getHead() == node1) {
+            System.out.println("SLL DeleteHead method test1 passed...");
+        } else {
+            System.out.println("SLL DeleteHead method test1 failed...");
+        }
+
+        testSLL1.DeleteHead();
+        if (testSLL1.getHead() == null) {
+            System.out.println("SLL DeleteHead method test2 passed...");
+        } else {
+            System.out.println("SLL DeleteHead method test2 failed...");
+        }
+
+        // DeleteTail test
+        testSLL0.DeleteTail();
+        if (testSLL0.getTail() == node9 && testSLL0.getLength() == 6) {
+            System.out.println("SLL DeleteTail method test1 passed...");
+        } else {
+            System.out.println("SLL DeleteTail method test1 failed...");
+        }
+
+        testSLL1.DeleteTail();
+        if (testSLL1.getTail() == null && testSLL1.getLength() == 0) {
+            System.out.println("SLL DeleteTail method test2 passed...");
+        } else {
+            System.out.println("SLL DeleteTail method test2 failed...");
+        }
+
+        // Delete test
+        testSLL0.Delete(node2);
+        if (testSLL0.getTail() == node9 && testSLL0.getLength() == 5 && testSLL0.getHead() == node1) {
+            System.out.println("SLL Delete method test1 passed...");
+        } else {
+            System.out.println("SLL Delete method test1 failed...");
+        }
+
+        testSLL0.Delete(node7);
+        if (testSLL1.getTail() == null && testSLL1.getLength() == 0) {
+            System.out.println("SLL Delete method test2 passed...");
+        } else {
+            System.out.println("SLL Delete method test2 failed...");
+        }
+
+        testSLL0.Delete(node1);
+        if (testSLL0.getTail() == node9 && testSLL0.getLength() == 4 && testSLL0.getHead() == node3) {
+            System.out.println("SLL Delete method test3 passed...");
+        } else {
+            System.out.println("SLL Delete method test3 failed...");
+        }
+
+        testSLL0.Delete(node9);
+        if (testSLL0.getTail() == node5 && testSLL0.getLength() == 3 && testSLL0.getHead() == node3) {
+            System.out.println("SLL Delete method test4 passed...");
+        } else {
+            System.out.println("SLL Delete method test4 failed...");
+        }
+
+        testSLL0.Clear();
+
+        
+
+
     }   
 }
 
