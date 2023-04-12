@@ -171,6 +171,7 @@ public class BST {
     public String printInOrder(){
         String inOrderData = getInOrder(root);
         System.out.println(inOrderData);
+        inOrderData = inOrderData.substring(0, inOrderData.length() - 1);
         return inOrderData;
     }
     
