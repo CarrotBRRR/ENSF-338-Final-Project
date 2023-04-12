@@ -106,6 +106,16 @@ public class DLL{
             Sort();
         }
 
+        if (this.head.getData() > node.getData()) {
+            InsertHead(node);
+            return;
+        }
+
+        if (this.tail.getData() < node.getData()) {
+            InsertTail(node);
+            return;
+        }
+
         DNode current;
         current = this.head;
         while (current.getNext() != null && current.getNext().getData() < node.getData()) {
@@ -165,7 +175,7 @@ public class DLL{
             this.head = null;
             this.tail = null;
             this.length--;
-            return null;
+            return returnTail;
         }
         DNode current = this.head;
         while (current.getNext() != this.tail) {
