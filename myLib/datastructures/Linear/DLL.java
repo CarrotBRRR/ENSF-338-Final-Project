@@ -1,7 +1,4 @@
 package myLib.datastructures.Linear;
-
-import java.sql.SQLXML;
-
 import myLib.datastructures.nodes.DNode;
 
 public class DLL{
@@ -14,6 +11,7 @@ public class DLL{
         this.tail = null;
         this.length = 0;
     }
+
     
     public DLL(DNode node) {
         this.head = node;
@@ -21,8 +19,12 @@ public class DLL{
         this.length = 1;
     }
     
+
     public void InsertHead(DNode node) {
-        if(this.head == null) {
+        if (node == null) {
+            return;
+        }
+        if(this.length == 0) {
             this.head = node;
             this.tail = node;
             this.length = 1;
@@ -34,10 +36,16 @@ public class DLL{
         length++;
     }
 
+
     public void InsertTail(DNode node) {
-        if (this.head == null) {
+        if (node == null) {
+            return;
+        }
+
+        if (this.length == 0) {
             this.head = node;
             this.tail = node;
+            this.length++;
             return;
         } else {
             DNode current = this.head;
@@ -51,7 +59,12 @@ public class DLL{
         }
     }
 
+
     public void Insert(DNode node, int position) {
+        if (node == null) {
+            return;
+        }
+
         if (position > length+1) {
             System.out.println("Position out of bounds");
             return;
@@ -81,6 +94,7 @@ public class DLL{
         length++;
     }
 
+
     public void SortedInsert(DNode node) {
         if (this.head == null) {
             InsertHead(node);
@@ -90,6 +104,16 @@ public class DLL{
         // goes through entire linked list, if not sorted then break while loop and call sort
         if (isSorted() ==  false) {
             Sort();
+        }
+
+        if (this.head.getData() > node.getData()) {
+            InsertHead(node);
+            return;
+        }
+
+        if (this.tail.getData() < node.getData()) {
+            InsertTail(node);
+            return;
         }
 
         DNode current;
@@ -105,6 +129,7 @@ public class DLL{
         length++;
     }
 
+
     public DNode Search(DNode node) {
         DNode current = this.head;
         while (current != null) {
@@ -116,110 +141,101 @@ public class DLL{
         return null;
     }
 
-    public void DeleteHead() {
+
+    public DNode DeleteHead() {
         if (this.head == null) {
-            return;
+            return null;
         }
+
+        DNode returnHead = this.head;
         if (length == 1) {
             this.head = null;
             this.tail = null;
             length--;
-            return;
+            return returnHead;
         }
+
         // temp is new head
         DNode temp = this.head.getNext();
-        this.head = null;
+        this.head.setNext(null);
         this.head = temp;
         this.head.setBefore(null);
         this.length--;
+        return returnHead;
     }
 
-    public void DeleteTail() {
+
+    public DNode DeleteTail() {
+        if (this.head == null) {
+            return null;
+        }
+
+        DNode returnTail = this.tail;
         if (length == 1) {
             this.head = null;
             this.tail = null;
             this.length--;
-            return;
+            return returnTail;
         }
         DNode current = this.head;
         while (current.getNext() != this.tail) {
             current = current.getNext();
         }
-        this.tail = null;
+        this.tail.setBefore(null);;
         current.setNext(null);
         this.tail = current;
         this.length--;
+        return returnTail;
     }
 
-    public void Delete(DNode node) {
-        DNode deleteDNode = Search(node);
-        if (deleteDNode == null) {
-            return;
+
+    public DNode Delete(DNode node) {
+        DNode deleteNode = Search(node);
+        if (deleteNode == null) {
+            return null;
         }
 
         if (node == this.head) {
-            DeleteHead();
-            return;
+            return DeleteHead();
         }
 
         if (node == this.tail) {
-            DeleteTail();
-            return;
+            return DeleteTail();
         }
 
         DNode current = this.head;
         while (current.getNext() != node) {
             current = current.getNext();
         }
+
         // current is the node before the to-be-deleted node
         current.setNext(node.getNext());
         node.getNext().setBefore(current);
         this.length--;
+
+        deleteNode.setNext(null);
+        deleteNode.setBefore(null);
+        return deleteNode;
     }
+
 
     public void Sort() {
         if (this.head == null || this.head.getNext() == null) {
             return;
         }
-
-
         DNode current = this.head.getNext();
         while(current != null) {
-            DNode prev = current.getBefore();
+            // next is to specify which node to try and sort next
             DNode next = current.getNext();
             //while prev.data > current.data, then make prev into current
-            while(prev != null && prev.getData() > current.getData()){
-                DNode temp = prev.getBefore();
-
-                // set prev.next to current.next
-                prev.setNext(current.getNext());
-
-                // set prev.before to current
-                prev.setBefore(current);
-
-                //set current.next to prev
-                current.setNext(prev);
-
-                //set current.before to prev.befor
-                current.setBefore(temp);
-
-                current = prev;
-            }
-            if (current.getBefore() == null) {
-                this.head = current;
-            } else {
-                current.setNext(next);
-                next.setBefore(current);
+            while(current.getBefore() != null && current.getBefore().getData() > current.getData()){
+                // swapNodes is just to swap two nodes with each other
+                swapNodes(current.getBefore(), current);
             }
             current = next;
         }
-        // used to find tail
-        current = this.head;
-        while(current.getNext() != null) {
-            current = current.getNext();
-        }
-        this.tail = current;
     }
+
 
     public void Clear() {
         while (this.head != null) {
@@ -227,12 +243,56 @@ public class DLL{
         }
     }
 
+
+    public void Print() {
+        System.out.println("List length: " + this.length);
+        System.out.println("Sort status: " + isSorted());
+        DNode current = this.head;
+        if (current == null) {
+            System.out.println("Empty List");
+        } else {
+            int i = 1;
+            while (current != this.tail) {
+                System.out.println("Index : " + i + " | Data : " + current.getData());
+                current = current.getNext();
+                i++;
+            }
+            if (this.length != 1) {
+                System.out.println("Index : " + i + " | Data : " + current.getData());
+            }
+        }
+        System.out.println();
+    }
+
+    private void swapNodes(DNode node1, DNode node2) {
+        DNode tempPrev = node1.getBefore();
+        DNode tempNext = node2.getNext();
+
+        if (tempPrev != null) {
+            tempPrev.setNext(node2);
+        } else {
+            head = node2;
+        }
+
+        if (tempNext != null) {
+            tempNext.setBefore(node1);
+        } else {
+            tail = node1;
+        }
+
+        node1.setNext(tempNext);
+        node2.setBefore(tempPrev);
+
+        node2.setNext(node1);
+        node1.setBefore(node2);
+    }
+
     public boolean isSorted() {
-        if (length == 0 || length == 1) {
+        if (this.head == null || this.head.getNext() == null) {
             return true;
         }
         DNode current = this.head.getNext();
-        while (current.getNext() != null) {
+        while (current != null) {
             if (current.getBefore().getData() > current.getData() ) {
                 return false;
             }
@@ -241,22 +301,7 @@ public class DLL{
         return true;
     }
 
-    public void Print() {
-        System.out.println("List length: " + this.length);
-        System.out.println("Sort status: "+ isSorted());
-        DNode current = this.head;
-        if (current == null) {
-            System.out.println("Empty List");
-        } else {
-            int i = 1;
-            while (current != null) {
-                System.out.println("Index : " + i + " | Data : " + current.getData());
-                current = current.getNext();
-                i++;
-            }
-        }
-    }
-
+    /* getters */
     public DNode getTail() {
         return this.tail;
     }

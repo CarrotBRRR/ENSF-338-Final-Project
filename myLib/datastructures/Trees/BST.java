@@ -1,8 +1,7 @@
 package myLib.datastructures.Trees;
 
-import java.util.Queue;
-import java.util.LinkedList;
 import myLib.datastructures.nodes.TNode;
+import myLib.datastructures.Linear.QueueLL;
 
 public class BST {
     private TNode root;
@@ -107,7 +106,7 @@ public class BST {
         }
     
         // Case 2: nodeToDelete has one child
-        else if (nodeToDelete.getLeft() == null ^ nodeToDelete.getRight() == null) {
+        else if (nodeToDelete.getLeft() == null || nodeToDelete.getRight() == null) {
             TNode child;
             if (nodeToDelete.getLeft() != null) {
                 child = nodeToDelete.getLeft();
@@ -168,54 +167,65 @@ public class BST {
         return succ;
     }
 
-    // In-order traversal method
-    public String inOrder() {
-        String result = "";
-
-        result += inOrder(root.getLeft());
-        System.out.print(root.getData() + " ");
-        result += inOrder(root.getRight());
-        
-        return result;
+    // In-order print method
+    public String printInOrder(){
+        String inOrderData = getInOrder(root);
+        System.out.println(inOrderData);
+        inOrderData = inOrderData.substring(0, inOrderData.length() - 1);
+        return inOrderData;
     }
-
-    public String inOrder(TNode node) {
+    
+    public String getInOrder(TNode node) {
         String result = "";
 
         if (node == null) {
-            return result;
+            return "";
+        }
+        if (node.getLeft() != null){
+            result += getInOrder(node.getLeft());
         }
 
-        result += inOrder(node.getLeft());
-        System.out.print(node.getData() + " ");
-        result += inOrder(node.getRight());
-
+        result += String.valueOf(node.getData()) + " ";
+        
+        if (node.getRight() != null){
+            result += getInOrder(node.getRight());
+        }
         return result;
     }
 
+    public String printBF(){
+        String BFOrderData = getBFOrder(root);
+        System.out.println(BFOrderData);
+        return BFOrderData;
+    }
 
-    public void printBF() {
-        if (this.root == null) {
+
+    public String getBFOrder(TNode node) {
+        String result = "";
+        if (node == null) {
             System.out.println("Tree is empty");
-            return;
+            return result;
         }
     
-        Queue<TNode> queue = new LinkedList<>();
-        queue.add(this.root);
+        QueueLL queue = new QueueLL();
+        queue.Enqueue(this.root.getData());
 
-        while (!queue.isEmpty()) {
-            int levelSize = queue.size();
+        while (!queue.Empty()) {
+            int levelSize = queue.getLength();
+
             for (int i = 0; i < levelSize; i++) {
-                TNode currentNode = queue.poll();
-                System.out.print(currentNode.getData() + " ");
-                if (currentNode.getLeft() != null) {
-                    queue.add(currentNode.getLeft());
+                TNode current = Search(queue.Dequeue());
+                result += current.getData() + " ";
+                if (current.getLeft() != null) {
+                    queue.Enqueue(current.getLeft().getData());
                 }
-                if (currentNode.getRight() != null) {
-                    queue.add(currentNode.getRight());
+                if (current.getRight() != null) {
+                    queue.Enqueue(current.getRight().getData());
                 }
             }
-            System.out.println();
+            result = result.substring(0, result.length() - 1); // remove space after last entry
+            result += "\n";
         }
+        return result.substring(0, result.length() - 1); // remove extra \n
     }
 }

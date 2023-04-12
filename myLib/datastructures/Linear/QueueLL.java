@@ -1,4 +1,5 @@
 package myLib.datastructures.Linear;
+
 // extends SLL
 import myLib.datastructures.nodes.DNode;
 
@@ -10,6 +11,10 @@ public class QueueLL extends SLL{
 
     public QueueLL(DNode node) {
         super(node);
+    }
+
+    public QueueLL(int num) {
+        super(num);
     }
 
     @Override
@@ -30,13 +35,22 @@ public class QueueLL extends SLL{
     }
 
     @Override
-    public void DeleteHead() {}
+    public DNode getHead() {return null;}
 
     @Override
-    public void DeleteTail() {}
+    public DNode getTail() { return null;}
 
     @Override
-    public void Delete(DNode node) {}
+    public int getLength() {return super.getLength();}
+
+    @Override
+    public DNode DeleteHead() {return null;}
+
+    @Override
+    public DNode DeleteTail() {return null;}
+
+    @Override
+    public DNode Delete(DNode node) {return null;}
 
     @Override
     public void Sort() {}
@@ -52,8 +66,15 @@ public class QueueLL extends SLL{
         super.InsertTail(node);
     }
 
-    public void Dequeue() {
+    public void Enqueue(int num) {
+        DNode node = new DNode(num);
+        super.InsertTail(node);
+    }
+
+    public int Dequeue() {
+        int data = super.getHead().getData();
         super.DeleteHead();
+        return data;
     }
     
     public DNode Peek() {

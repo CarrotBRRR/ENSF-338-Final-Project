@@ -13,6 +13,19 @@ public class AVL extends BST{
     
     public AVL(TNode obj) {
         super(obj);
+        super.getRoot().setBalance(getBalFactor(super.getRoot()));
+        while(true){
+            balance(super.getRoot());
+            if(getBalFactor(super.getRoot()) > -1 && getBalFactor(super.getRoot())< 1){
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void setRoot(TNode node){
+        AVL temp = new AVL(node);
+        super.setRoot(temp.getRoot());
     }
 
     // Balance after inserting
@@ -22,6 +35,7 @@ public class AVL extends BST{
         super.getRoot().setBalance(getBalFactor(super.getRoot()));
         balance(super.getRoot());
     }
+    
     // Balance after deleting
     @Override
     public void Delete(TNode node){
@@ -29,7 +43,7 @@ public class AVL extends BST{
         super.getRoot().setBalance(getBalFactor(super.getRoot()));
         balance(super.getRoot());
     }
-
+    // getHeight
     public int getHeight(TNode node){
         if(node == null){
             return -1;
@@ -44,34 +58,33 @@ public class AVL extends BST{
             return RH + 1;
         }
     }
-
+    // Calculate Balance from Left Height - Right Height
     public int getBalFactor(TNode node){
         int LH = getHeight(node.getLeft());
         int RH = getHeight(node.getRight());
         int result = LH - RH;
         return result;
     }
-
+    
+    // Balance Function
     public void balance(TNode node) {
         if (node == null) {
             return;
         }
 
         int balanceFactor = node.getBalance();
-        System.out.println("Balance Factor: " + balanceFactor);
 
         if (balanceFactor > 1) {
-            if (node.getRight() != null && getBalFactor(node.getLeft()) < -1) {
+            if (getBalFactor(node.getLeft()) < 0) {
                 node.setLeft(rotateLeft(node.getLeft()));
             }
             rotateRight(node);
 
         } else if (balanceFactor < -1) {
-            if (node.getLeft() != null && getBalFactor(node.getRight()) > 1) {
-                node.setRight(rotateRight(node.getLeft()));
+            if (getBalFactor(node.getRight()) > 0) {
+                node.setRight(rotateRight(node.getRight()));
             }
             rotateLeft(node);
-
         }
         
         node.setBalance(getBalFactor(node));
@@ -82,16 +95,11 @@ public class AVL extends BST{
     private TNode rotateRight(TNode node) {
         TNode pivot = node.getLeft();
 
-        pivot.setParent(node.getParent());
+        pivot.setParent(node.getParent());     
         node.setParent(pivot);
 
         node.setLeft(pivot.getRight());
         pivot.setRight(node);
-
-
-        if(pivot.getRight() != null){
-            pivot.getRight().setParent(node);
-        }
 
         if(super.getRoot() == node){
             super.setRoot(pivot);
@@ -100,23 +108,18 @@ public class AVL extends BST{
         node.setBalance(getBalFactor(node));
         pivot.setBalance(getBalFactor(pivot));
 
-        System.out.println("Rotated right");
         return pivot;
     }
 
     // Perform a left rotation at the given node
     private TNode rotateLeft(TNode node) {
         TNode pivot = node.getRight();
+
         pivot.setParent(node.getParent());
         node.setParent(pivot);
 
         node.setRight(pivot.getLeft());
         pivot.setLeft(node);
-
-
-        if(pivot.getLeft() != null){
-            pivot.getLeft().setParent(node);
-        }
 
         if(super.getRoot() == node){
             super.setRoot(pivot);
@@ -125,7 +128,6 @@ public class AVL extends BST{
         node.setBalance(node.getBalance() - 1 - Math.max(0, pivot.getBalance()));
         pivot.setBalance(pivot.getBalance() - 1 + Math.min(0, node.getBalance()));
 
-        System.out.println("Rotated left");
         return pivot;
     }
 }
