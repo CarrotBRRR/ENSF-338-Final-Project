@@ -54,6 +54,8 @@ public class DLLTest {
 
     @Test 
     public void testInsertTail() {
+        assertEquals(0, dll.getLength());
+
         dll.InsertTail(node1);
         assertEquals(1, dll.getLength());
         assertEquals(node1, dll.getHead());
@@ -62,6 +64,7 @@ public class DLLTest {
         assertNull(dll.getTail().getBefore());
         assertNull(dll.getHead().getNext());
         assertNull(dll.getTail().getNext());
+        assertEquals(1, dll.getLength());
 
         dll.InsertTail(node2);
         assertEquals(2, dll.getLength());
@@ -80,12 +83,15 @@ public class DLLTest {
 
     @Test 
     public void testInsert() {
+        assertEquals(0, dll.getLength());
+
         dll.Insert(node1, 1);
         assertEquals(1, dll.getLength());
         assertEquals(node1, dll.getHead());
         assertEquals(node1, dll.getTail());
         assertNull(dll.getHead().getBefore());
         assertNull(dll.getTail().getBefore());
+        assertEquals(1, dll.getLength());
 
         dll.Insert(node2, 2);
         assertEquals(2, dll.getLength());
@@ -93,6 +99,7 @@ public class DLLTest {
         assertEquals(node2, dll.getTail());
         assertEquals(dll.getHead().getNext(), node2);
         assertEquals(dll.getTail().getBefore(), node1);
+        assertEquals(2, dll.getLength());
 
         dll.Insert(node3, 2);
         assertEquals(3, dll.getLength());
@@ -101,6 +108,7 @@ public class DLLTest {
         assertEquals(node2, dll.getTail());
         assertEquals(dll.getHead().getNext(), node3);
         assertEquals(dll.getTail().getBefore(), node3);
+        assertEquals(3, dll.getLength());
 
         dll.Insert(node4, 4);
         assertEquals(4, dll.getLength());
@@ -109,20 +117,22 @@ public class DLLTest {
         assertEquals(node2, dll.getHead().getNext().getNext());
         assertEquals(node4, dll.getTail());
         assertEquals(dll.getTail().getBefore(), node2);
+        assertEquals(4, dll.getLength());
     }
 
     @Test
     public void testSortedInsert() {
-        DNode node1 = new DNode(1);
-        DNode node2 = new DNode(2);
-        DNode node3 = new DNode(3);
-
         dll.SortedInsert(node2);
+        assertEquals(1, dll.getLength());
         assertEquals(node2, dll.DeleteHead());
+        assertEquals(0, dll.getLength());
 
         dll.SortedInsert(node2);
+        assertEquals(1, dll.getLength());
         dll.SortedInsert(node1);
+        assertEquals(2, dll.getLength());
         dll.SortedInsert(node3);
+        assertEquals(3, dll.getLength());
         assertEquals(node1, dll.getTail().getBefore().getBefore());
         assertEquals(node2, dll.getTail().getBefore());
         assertEquals(node1, dll.DeleteHead());
@@ -151,12 +161,19 @@ public class DLLTest {
         dll.InsertHead(node1);
         dll.InsertTail(node2);
         dll.InsertTail(node3);
+        assertEquals(3, dll.getLength());
+
         assertEquals(node1, dll.DeleteHead());
         assertEquals(node2, dll.getTail().getBefore());
+        assertEquals(2, dll.getLength());
+
         assertEquals(node2, dll.DeleteHead());
         assertNull(dll.getTail().getBefore());
+        assertEquals(1, dll.getLength());
+
         assertEquals(node3, dll.DeleteHead());
         assertNull(dll.DeleteHead());
+        assertEquals(0, dll.getLength());
     }
 
     @Test
@@ -166,13 +183,19 @@ public class DLLTest {
         dll.InsertHead(node1);
         dll.InsertTail(node2);
         dll.InsertTail(node3);
+        assertEquals(3, dll.getLength());
 
         assertEquals(node3, dll.DeleteTail());
         assertEquals(node1, dll.getTail().getBefore());
+        assertEquals(2, dll.getLength());
+
         assertEquals(node2, dll.DeleteTail());
         assertNull(dll.getTail().getBefore());
+        assertEquals(1, dll.getLength());
+
         assertEquals(node1, dll.DeleteTail());
         assertNull(dll.getHead());
+        assertEquals(0, dll.getLength());
     }
 
     @Test
@@ -182,12 +205,20 @@ public class DLLTest {
         dll.InsertHead(node1);
         dll.InsertTail(node2);
         dll.InsertTail(node3);
+        assertEquals(3, dll.getLength());
+
         assertEquals(node3, dll.Delete(node3));
         assertEquals(node1, dll.getTail().getBefore());
+        assertEquals(2, dll.getLength());
+
+
         assertEquals(node2, dll.Delete(node2));
         assertNull(dll.getTail().getBefore());
+        assertEquals(1, dll.getLength());
+
         assertEquals(node1, dll.Delete(node1));
         assertNull(dll.getHead());
+        assertEquals(0, dll.getLength());
     }
 
     @Test
@@ -221,11 +252,13 @@ public class DLLTest {
         dll.InsertHead(node1);
         dll.Clear();
         assertNull(dll.getHead());
+        assertEquals(0, dll.getLength());
 
         dll.InsertHead(node1);
         dll.InsertTail(node2);
         dll.InsertTail(node3);
         dll.Clear();
         assertNull(dll.getHead());
+        assertEquals(0, dll.getLength());
     }
 }

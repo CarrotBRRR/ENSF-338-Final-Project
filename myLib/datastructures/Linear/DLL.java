@@ -21,9 +21,10 @@ public class DLL{
     
 
     public void InsertHead(DNode node) {
-        if (node == null) {
+        if (node == null || Search(node) == node) {
             return;
         }
+
         if(this.length == 0) {
             this.head = node;
             this.tail = node;
@@ -38,7 +39,7 @@ public class DLL{
 
 
     public void InsertTail(DNode node) {
-        if (node == null) {
+        if (node == null || Search(node) == node) {
             return;
         }
 
@@ -61,7 +62,7 @@ public class DLL{
 
 
     public void Insert(DNode node, int position) {
-        if (node == null) {
+        if (node == null || Search(node) == node) {
             return;
         }
 
@@ -96,6 +97,10 @@ public class DLL{
 
 
     public void SortedInsert(DNode node) {
+        if (node == null || Search(node) == node) {
+            return;
+        }
+
         if (this.head == null) {
             InsertHead(node);
             return;
@@ -132,15 +137,16 @@ public class DLL{
 
     public DNode Search(DNode node) {
         DNode current = this.head;
-        while (current != null) {
+        int i = 0;
+        while (i < this.length) {
             if (current == node) {
                 return current;
             }
             current = current.getNext();
+            i++;
         }
         return null;
     }
-
 
     public DNode DeleteHead() {
         if (this.head == null) {
@@ -163,7 +169,6 @@ public class DLL{
         this.length--;
         return returnHead;
     }
-
 
     public DNode DeleteTail() {
         if (this.head == null) {
@@ -287,13 +292,14 @@ public class DLL{
         node1.setBefore(node2);
     }
 
-    public boolean isSorted() {
-        if (this.head == null || this.head.getNext() == null) {
+    private boolean isSorted() {
+        DNode current = this.head;
+        if (current == null || length == 1) {
             return true;
         }
-        DNode current = this.head.getNext();
-        while (current != null) {
-            if (current.getBefore().getData() > current.getData() ) {
+
+        while (current != this.tail) {
+            if (current.getData() > current.getNext().getData()) {
                 return false;
             }
             current = current.getNext();
