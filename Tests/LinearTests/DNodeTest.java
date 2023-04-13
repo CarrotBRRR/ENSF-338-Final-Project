@@ -1,11 +1,9 @@
-package myLib.datastructures.Tests.LinearTests;
-import myLib.datastructures.Linear.DLL;
+package Tests.LinearTests;
 import myLib.datastructures.nodes.DNode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class DNodeTest {
