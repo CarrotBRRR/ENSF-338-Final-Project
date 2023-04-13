@@ -1,4 +1,4 @@
-package myLib.datastructures.Tests.LinearTests;
+package Tests.LinearTests;
 import myLib.datastructures.Linear.StackLL;
 import myLib.datastructures.nodes.DNode;
 

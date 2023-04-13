@@ -1,4 +1,4 @@
-package myLib.datastructures.Tests.TreeTests;
+package Tests.TreeTests;
 
 import org.junit.*;
 import static org.junit.Assert.*;
