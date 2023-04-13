@@ -45,7 +45,7 @@ public class StackLL extends SLL{
     @Override
     public void Clear() {
         while (super.getHead() != null) {
-            super.DeleteHead();
+            super.DeleteTail();
         }
     }
 
@@ -53,8 +53,11 @@ public class StackLL extends SLL{
         super.InsertTail(node);
     }
 
-    public void Pop() {
-        super.DeleteTail();
+    public int Pop() {
+        if (super.getLength() == 0) {
+            return 0;
+        }
+        return super.DeleteTail().getData();
     }
 
     public DNode Peek() {
@@ -69,7 +72,7 @@ public class StackLL extends SLL{
         int i = 1;
         while (current != null) {
             if (current == node) {
-                return i;
+                return super.getLength() - i + 1;
             }
             current = current.getNext();
             i++;

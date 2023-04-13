@@ -27,7 +27,7 @@ public class SLL {
     }
 
     public void InsertHead(DNode node) {
-        if (node == null) {
+        if (node == null || this.Search(node) == node) {
             return;
         }
 
@@ -44,9 +44,10 @@ public class SLL {
     }
 
     public void InsertTail(DNode node) {
-        if (node == null) {
+        if (node == null || this.Search(node) == node) {
             return;
         }
+
         if (this.length == 0) {
             this.head = node;
             this.tail = node;
@@ -64,6 +65,10 @@ public class SLL {
     }
 
     public void Insert(DNode node, int position) {
+        if (node == null || this.Search(node) == node) {
+            return;
+        }
+
         if (position > length+1) {
             System.out.println("Position out of bounds");
             return;
@@ -71,12 +76,12 @@ public class SLL {
         }
         if (position == 1) {
             // essentially setting a new head
-            InsertHead(node);
+            this.InsertHead(node);
             return;
         }
         if (position == (length + 1)) {
             // essentially setting a new tail
-            InsertTail(node);
+            this.InsertTail(node);
             return;
         }
         DNode current = this.head;
@@ -89,23 +94,27 @@ public class SLL {
     }
 
     public void SortedInsert(DNode node) {
+        if (node == null || this.Search(node) == node) {
+            return;
+        }
+        
         if (this.head == null) {
-            InsertHead(node);
+            this.InsertHead(node);
             return;
         }
         
         // goes through entire linked list, if not sorted then break while loop and call sort
-        if (isSorted() ==  false) {
-            Sort();
+        if (this.isSorted() ==  false) {
+            this.Sort();
         }
 
         if (this.head.getData() > node.getData()) {
-            InsertHead(node);
+            this.InsertHead(node);
             return;
         }
 
         if (this.tail.getData() < node.getData()) {
-            InsertTail(node);
+            this.InsertTail(node);
             return;
         }
 
@@ -121,11 +130,13 @@ public class SLL {
 
     public DNode Search(DNode node) {
         DNode current = this.head;
-        while (current != null) {
+        int i = 0;
+        while (i < this.length) {
             if (current == node) {
                 return current;
             }
             current = current.getNext();
+            i++;
         }
         return null;
     }
@@ -185,11 +196,11 @@ public class SLL {
 
 
         if (node == this.head) {
-            return DeleteHead();
+            return this.DeleteHead();
         }
 
         if (node == this.tail) {
-            return DeleteTail();
+            return this.DeleteTail();
         }
 
         DNode current = this.head;
@@ -240,7 +251,7 @@ public class SLL {
 
     public void Clear() {
         while (this.head != null) {
-            DeleteHead();
+            this.DeleteHead();
         }
     }
 
@@ -269,7 +280,7 @@ public class SLL {
     }
 
 
-    public boolean isSorted() {
+    private boolean isSorted() {
         DNode current = this.head;
         if (current == null || length == 1) {
             return true;
