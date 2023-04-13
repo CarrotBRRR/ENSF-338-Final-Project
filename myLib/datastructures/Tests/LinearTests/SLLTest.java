@@ -29,63 +29,63 @@ public class SLLTest {
     @Test
     public void testInsertHead() {
         sll.InsertHead(node1);
-        Assert.assertEquals(1, sll.getLength());
-        Assert.assertEquals(node1, sll.getHead());
+        assertEquals(1, sll.getLength());
+        assertEquals(node1, sll.getHead());
 
         sll.InsertHead(node2);
-        Assert.assertEquals(2, sll.getLength());
-        Assert.assertEquals(node2, sll.getHead());
-        Assert.assertEquals(node1, sll.getHead().getNext());
+        assertEquals(2, sll.getLength());
+        assertEquals(node2, sll.getHead());
+        assertEquals(node1, sll.getHead().getNext());
 
         sll.InsertHead(node3);
-        Assert.assertEquals(3, sll.getLength());
-        Assert.assertEquals(node3, sll.getHead());
-        Assert.assertEquals(node2, sll.getHead().getNext());
-        Assert.assertEquals(node1, sll.getHead().getNext().getNext());
+        assertEquals(3, sll.getLength());
+        assertEquals(node3, sll.getHead());
+        assertEquals(node2, sll.getHead().getNext());
+        assertEquals(node1, sll.getHead().getNext().getNext());
     }
 
     @Test
     public void testInsertTail() {
         sll.InsertTail(node1);
-        Assert.assertEquals(1, sll.getLength());
-        Assert.assertEquals(node1, sll.getHead());
-        Assert.assertEquals(node1, sll.getTail());
+        assertEquals(1, sll.getLength());
+        assertEquals(node1, sll.getHead());
+        assertEquals(node1, sll.getTail());
 
         sll.InsertTail(node2);
-        Assert.assertEquals(2, sll.getLength());
-        Assert.assertEquals(node1, sll.getHead());
-        Assert.assertEquals(node2, sll.getTail());
+        assertEquals(2, sll.getLength());
+        assertEquals(node1, sll.getHead());
+        assertEquals(node2, sll.getTail());
 
         sll.InsertTail(node3);
-        Assert.assertEquals(3, sll.getLength());
-        Assert.assertEquals(node1, sll.getHead());
-        Assert.assertEquals(node3, sll.getTail());
+        assertEquals(3, sll.getLength());
+        assertEquals(node1, sll.getHead());
+        assertEquals(node3, sll.getTail());
     }
 
     @Test
     public void testInsert() {
         sll.Insert(node1, 1);
-        Assert.assertEquals(1, sll.getLength());
-        Assert.assertEquals(node1, sll.getHead());
-        Assert.assertEquals(node1, sll.getTail());
+        assertEquals(1, sll.getLength());
+        assertEquals(node1, sll.getHead());
+        assertEquals(node1, sll.getTail());
 
         sll.Insert(node2, 2);
-        Assert.assertEquals(2, sll.getLength());
-        Assert.assertEquals(node1, sll.getHead());
-        Assert.assertEquals(node2, sll.getTail());
+        assertEquals(2, sll.getLength());
+        assertEquals(node1, sll.getHead());
+        assertEquals(node2, sll.getTail());
 
         sll.Insert(node3, 2);
-        Assert.assertEquals(3, sll.getLength());
-        Assert.assertEquals(node1, sll.getHead());
-        Assert.assertEquals(node3, sll.getHead().getNext());
-        Assert.assertEquals(node2, sll.getTail());
+        assertEquals(3, sll.getLength());
+        assertEquals(node1, sll.getHead());
+        assertEquals(node3, sll.getHead().getNext());
+        assertEquals(node2, sll.getTail());
 
         sll.Insert(node4, 4);
-        Assert.assertEquals(4, sll.getLength());
-        Assert.assertEquals(node1, sll.getHead());
-        Assert.assertEquals(node3, sll.getHead().getNext());
-        Assert.assertEquals(node2, sll.getHead().getNext().getNext());
-        Assert.assertEquals(node4, sll.getTail());
+        assertEquals(4, sll.getLength());
+        assertEquals(node1, sll.getHead());
+        assertEquals(node3, sll.getHead().getNext());
+        assertEquals(node2, sll.getHead().getNext().getNext());
+        assertEquals(node4, sll.getTail());
     }
 
     @Test
@@ -98,8 +98,11 @@ public class SLLTest {
         assertEquals(node2, sll.DeleteHead());
 
         sll.SortedInsert(node2);
+        assertEquals(1, sll.getLength());
         sll.SortedInsert(node1);
+        assertEquals(2, sll.getLength());
         sll.SortedInsert(node3);
+        assertEquals(3, sll.getLength());
         assertEquals(node1, sll.DeleteHead());
         assertEquals(node2, sll.DeleteHead());
         assertEquals(node3, sll.DeleteHead());
@@ -126,8 +129,11 @@ public class SLLTest {
         sll.InsertTail(node2);
         sll.InsertTail(node3);
         assertEquals(node1, sll.DeleteHead());
+        assertEquals(2, sll.getLength());
         assertEquals(node2, sll.DeleteHead());
+        assertEquals(1, sll.getLength());
         assertEquals(node3, sll.DeleteHead());
+        assertEquals(0, sll.getLength());
         assertNull(sll.DeleteHead());
     }
 
@@ -139,21 +145,30 @@ public class SLLTest {
         sll.InsertTail(node2);
         sll.InsertTail(node3);
         assertEquals(node3, sll.DeleteTail());
+        assertEquals(2, sll.getLength());
         assertEquals(node2, sll.DeleteTail());
+        assertEquals(1, sll.getLength());
         assertEquals(node1, sll.DeleteTail());
+        assertEquals(0, sll.getLength());
         assertNull(sll.getHead());
     }
 
     @Test
     public void testDelete() {
         assertNull(sll.Delete(node1));
+        
+        sll.InsertHead(node1);
+        assertEquals(node1, sll.Delete(node1));
 
         sll.InsertHead(node1);
         sll.InsertTail(node2);
         sll.InsertTail(node3);
         assertEquals(node3, sll.Delete(node3));
+        assertEquals(2, sll.getLength());
         assertEquals(node2, sll.Delete(node2));
+        assertEquals(1, sll.getLength());
         assertEquals(node1, sll.Delete(node1));
+        assertEquals(0, sll.getLength());
         assertNull(sll.getHead());
     }
 
@@ -183,11 +198,13 @@ public class SLLTest {
         sll.InsertHead(node1);
         sll.Clear();
         assertNull(sll.getHead());
+        assertEquals(0, sll.getLength());
 
         sll.InsertHead(node1);
         sll.InsertTail(node2);
         sll.InsertTail(node3);
         sll.Clear();
         assertNull(sll.getHead());
+        assertEquals(0, sll.getLength());
     }
 }

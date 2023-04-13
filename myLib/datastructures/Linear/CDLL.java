@@ -17,13 +17,10 @@ public class CDLL extends DLL {
         if (super.getHead() != null) {
             super.getHead().setBefore(null);
             super.getTail().setNext(null);
-            super.InsertHead(node);
-            super.getHead().setBefore(super.getTail());
-            super.getTail().setNext(super.getHead());
-
-        } else {
-            super.InsertHead(node);
         }
+        super.InsertHead(node);
+        super.getHead().setBefore(super.getTail());
+        super.getTail().setNext(super.getHead());
     }
 
     @Override
@@ -31,13 +28,10 @@ public class CDLL extends DLL {
         if (super.getHead() != null) {
             super.getHead().setBefore(null);
             super.getTail().setNext(null);
-            super.InsertTail(node);
-            super.getHead().setBefore(super.getTail());
-            super.getTail().setNext(super.getHead());
-
-        } else {
-            super.InsertTail(node);
         }
+        super.InsertTail(node);
+        super.getHead().setBefore(super.getTail());
+        super.getTail().setNext(super.getHead());
     }
 
     @Override
@@ -45,13 +39,10 @@ public class CDLL extends DLL {
         if (super.getHead() != null) {
             super.getHead().setBefore(null);
             super.getTail().setNext(null);
-            super.Insert(node, position);
-            super.getHead().setBefore(super.getTail());
-            super.getTail().setNext(super.getHead());
-
-        } else {
-            super.Insert(node, position);
         }
+        super.Insert(node, position);
+        super.getHead().setBefore(super.getTail());
+        super.getTail().setNext(super.getHead());
     }
 
     @Override
@@ -59,29 +50,30 @@ public class CDLL extends DLL {
         if (super.getHead() != null) {
             super.getHead().setBefore(null);
             super.getTail().setNext(null);
-            super.SortedInsert(node);
-            super.getHead().setBefore(super.getTail());
-            super.getTail().setNext(super.getHead());
-
-        } else {
-            super.SortedInsert(node);
         }
+        super.SortedInsert(node);
+        super.getHead().setBefore(super.getTail());
+        super.getTail().setNext(super.getHead());
     }
 
     @Override
     public DNode Search(DNode node) {
-        super.getHead().setBefore(null);
-        super.getTail().setNext(null);
-        DNode returnNode = super.Search(node);
-        super.getHead().setBefore(super.getTail());
-        super.getTail().setNext(super.getHead());
-        return returnNode;
+        return super.Search(node);
     }
 
     @Override
     public DNode DeleteHead() {
+        if (super.getHead() == null) {
+            return null;
+        }
+
         super.getHead().setBefore(null);
         super.getTail().setNext(null);
+
+        if (super.getLength() == 1) {
+            return super.DeleteHead();
+        }
+
         DNode returnNode = super.DeleteHead();
         super.getHead().setBefore(super.getTail());
         super.getTail().setNext(super.getHead());
@@ -90,8 +82,17 @@ public class CDLL extends DLL {
 
     @Override
     public DNode DeleteTail() {
+        if (super.getHead() == null) {
+            return null;
+        }
+
         super.getHead().setBefore(null);
         super.getTail().setNext(null);
+
+        if (super.getLength() == 1) {
+            return super.DeleteTail();
+        }
+
         DNode returnNode = super.DeleteTail();
         super.getHead().setBefore(super.getTail());
         super.getTail().setNext(super.getHead());
@@ -100,6 +101,19 @@ public class CDLL extends DLL {
 
     @Override
     public DNode Delete(DNode node) {
+        DNode deleteNode = super.Search(node);
+        if (deleteNode == null) {
+            return null;
+        }
+
+        if (node == super.getHead() ) {
+            return DeleteHead();
+        }
+
+        if (node == super.getTail()) {
+            return DeleteTail();
+        }
+
         super.getHead().setBefore(null);
         super.getTail().setNext(null);
         DNode returnNode = super.Delete(node);
@@ -110,6 +124,9 @@ public class CDLL extends DLL {
 
     @Override
     public void Sort() {
+        if (super.getLength() == 1 || super.getLength() == 0) {
+            return;
+        }
         super.getHead().setBefore(null);
         super.getTail().setNext(null);
         super.Sort();
@@ -135,15 +152,5 @@ public class CDLL extends DLL {
     @Override
     public int getLength() {
         return super.getLength();
-    }
-
-    @Override
-    public boolean isSorted() {
-        super.getHead().setBefore(null);
-        super.getTail().setNext(null);
-        boolean returnBool = super.isSorted();
-        super.getHead().setBefore(super.getTail());
-        super.getTail().setNext(super.getHead());
-        return returnBool;
     }
 }

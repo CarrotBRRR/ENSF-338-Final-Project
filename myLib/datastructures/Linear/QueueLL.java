@@ -72,9 +72,11 @@ public class QueueLL extends SLL{
     }
 
     public int Dequeue() {
-        int data = super.getHead().getData();
-        super.DeleteHead();
-        return data;
+        if (super.getLength() == 0) {
+            return 0;
+        }
+        
+        return super.DeleteHead().getData();
     }
     
     public DNode Peek() {
