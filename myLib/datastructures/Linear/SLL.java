@@ -2,23 +2,47 @@ package myLib.datastructures.Linear;
 
 import myLib.datastructures.nodes.DNode;
 
-public class SLL {
-    private int length;
-    private DNode head;
-    private DNode tail;
+/**
+ * A Singly Linked List (SLL) implementation that stores nodes of type DNode.
+ * Nodes can be inserted at the head, tail, or at a specific position in the SLL.
+ * Nodes can also be sorted in ascending order based on their data.
+ * Nodes can be searched, deleted from the SLL, and the SLL can be sorted.
+ * 
+ * @author Nathan Ante
+ * @version 1.0
+ */
 
+public class SLL {
+    private int length;         // The length of the SLL
+    private DNode head;         // The head (first node) of the SLL
+    private DNode tail;         // The tail (last node) of the SLL
+
+
+    /**
+     * Constructs an empty SLL with a null head, tail, and length of 0.
+     */
     public SLL() {
         this.head = null;
         this.tail = null;
         this.length = 0;
     }
 
+    /**
+     * Constructs a SLL with the given node as both the head and the tail, and a length of 1.
+     *
+     * @param node The node to be set as both the head and the tail of the SLL.
+     */
     public SLL(DNode node) {
         this.head = node;
         this.tail = node;
         this.length = 1;
     }
 
+    /**
+     * Constructs a SLL with the given int after it creates a new node and sets it to both the head and the tail, and a sets a length of 1.
+     *
+     * @param node The node to be set as both the head and the tail of the SLL.
+     */
     public SLL(int num) {
         DNode node = new DNode(num);
         this.head = node;
@@ -26,6 +50,11 @@ public class SLL {
         this.length = 1;
     }
 
+    /**
+     * Inserts the given node at the head of the SLL.
+     *
+     * @param node The node to be inserted at the head of the SLL.
+     */
     public void InsertHead(DNode node) {
         if (node == null || this.Search(node) == node) {
             return;
@@ -43,6 +72,11 @@ public class SLL {
         }
     }
 
+    /**
+     * Inserts the given node at the tail of the SLL.
+     *
+     * @param node The node to be inserted at the tail of the SLL.
+     */
     public void InsertTail(DNode node) {
         if (node == null || this.Search(node) == node) {
             return;
@@ -64,6 +98,12 @@ public class SLL {
         }
     }
 
+    /**
+     * Inserts the given node at the specified position in the SLL.
+     *
+     * @param node     The node to be inserted in the SLL.
+     * @param position The position at which the node should be inserted.
+     */
     public void Insert(DNode node, int position) {
         if (node == null || this.Search(node) == node) {
             return;
@@ -93,6 +133,13 @@ public class SLL {
         length++;
     }
 
+    /**
+     * Inserts the given node at the sorted position in ascending order in the SLL.
+     * Sorts the list first if it wasnt already.
+     *
+     * @param node     The node to be inserted in the SLL.
+     * 
+     */
     public void SortedInsert(DNode node) {
         if (node == null || this.Search(node) == node) {
             return;
@@ -128,6 +175,11 @@ public class SLL {
 
     }
 
+    /**
+     * Searches the node within the list
+     * @param node  The node to be searched
+     * @return The node if it is within the list, else it returns null
+     */
     public DNode Search(DNode node) {
         DNode current = this.head;
         int i = 0;
@@ -141,6 +193,11 @@ public class SLL {
         return null;
     }
 
+    /**
+     * Deletes the head node of the list
+     * 
+     * @return The deleted node if the list is not empty, else it returns null
+     */
     public DNode DeleteHead() {
         if (this.head == null) {
             return null;
@@ -163,6 +220,11 @@ public class SLL {
     }
 
 
+    /**
+     * Deletes the tail node of the list.
+     * 
+     * @return The deleted node if the list is not empty, else it returns null.
+     */
     public DNode DeleteTail() {
         if (this.head == null) {
             return null;
@@ -187,13 +249,16 @@ public class SLL {
         return returnTail;
     }
 
-
+    /**
+     * Deletes the node that was specified.
+     * @param node  The node to be deleted
+     * @return The deleted node if it exists in the list, else it returns null.
+     */
     public DNode Delete(DNode node) {
         DNode deleteNode = Search(node);
         if (deleteNode == null) {
             return null;
         }
-
 
         if (node == this.head) {
             return this.DeleteHead();
@@ -213,7 +278,10 @@ public class SLL {
         deleteNode.setNext(null);
         return deleteNode;
     }
-
+    
+    /**
+     * Sorts the list in ascending order based on the data value of the node.
+     */
     public void Sort() {
         if (this.head == null) {
             return;
@@ -248,13 +316,18 @@ public class SLL {
         this.tail = newTail;
     }
 
-
+    /**
+     * Clears the list, deletes every node.
+     */
     public void Clear() {
         while (this.head != null) {
             this.DeleteHead();
         }
     }
 
+    /**
+     * Prints the contents of the list.
+     */
     public void Print() {
         System.out.println("List length: " + this.length);
         System.out.println("Sort status: "+ isSorted());
@@ -280,6 +353,10 @@ public class SLL {
     }
 
 
+    /**
+     * Checks if list is sorted or not
+     * @return Returns true if list is sorted by ascending order of data, else returns false
+     */
     private boolean isSorted() {
         DNode current = this.head;
         if (current == null || length == 1) {
@@ -296,14 +373,27 @@ public class SLL {
     }
 
     /* Getters */
+
+    /**
+     * Returns head node of list
+     * @return The head node
+     */
     public DNode getHead() {
         return this.head;
     }
 
+    /**
+     * Returns tail node of list
+     * @return The tail node
+     */
     public DNode getTail() {
         return this.tail;
     }
 
+    /**
+     * Returns length of list
+     * @return The list length
+     */
     public int getLength() {
         return this.length;
     }

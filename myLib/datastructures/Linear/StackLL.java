@@ -2,13 +2,26 @@ package myLib.datastructures.Linear;
 
 import myLib.datastructures.nodes.DNode;
 
-// extends SLL
+/**
+ * StackLL is a stack implementation that extends a singly linked list (SLL).
+ * It allows operations like push, pop, peek, check if empty, and print the stack.
+ * @author Nathan Ante
+ * @version 1.0
+ */
 public class StackLL extends SLL{
 
+    /**
+     * Default constructor that creates an empty stack.
+     */
     public StackLL() {
         super();
     }
 
+    /**
+     * Constructor that creates a stack with the given node as the head.
+     * 
+     * @param node The initial node to set as the head of the stack.
+     */
     public StackLL(DNode node) {
         super(node);
     }
@@ -42,6 +55,9 @@ public class StackLL extends SLL{
     @Override
     public void Sort() {}
     
+    /**
+     * Clears the stack by repeatedly deleting the tail until the stack is empty.
+     */
     @Override
     public void Clear() {
         while (super.getHead() != null) {
@@ -49,10 +65,20 @@ public class StackLL extends SLL{
         }
     }
 
+    /**
+     * Pushes a node onto the top of the stack by inserting it at the tail.
+     * 
+     * @param node The node to be pushed onto the stack.
+     */
     public void Push(DNode node) {
         super.InsertTail(node);
     }
 
+    /**
+     * Pops the node from the top of the stack by deleting it from the tail.
+     * 
+     * @return The data of the popped node, or 0 if the stack is empty.
+     */
     public int Pop() {
         if (super.getLength() == 0) {
             return 0;
@@ -60,10 +86,21 @@ public class StackLL extends SLL{
         return super.DeleteTail().getData();
     }
 
+    /**
+     * Peeks at the node from the top of the stack without removing it.
+     * 
+     * @return The node at the top of the stack, or null if the stack is empty.
+     */
     public DNode Peek() {
         return super.getTail();
     }
 
+    /**
+     * Searches for the position of a node in the stack from top to bottom.
+     * 
+     * @param node The node to search for in the stack.
+     * @return The position of the node in the stack, or -1 if the node is not found.
+     */
     public int Seek(DNode node) {
         if (super.getHead() == null) {
             return -1;
@@ -80,6 +117,11 @@ public class StackLL extends SLL{
         return -1;
     }
 
+    /**
+     * Checks if stack is empty
+     * 
+     * @return true if the stack is empty, otherwise false.
+     */
     public boolean Empty() {
         if (super.getHead() == null) {
             return true;
@@ -88,6 +130,9 @@ public class StackLL extends SLL{
         }
     }
 
+    /**
+     * Prints the cotents of the stack
+     */
     @Override
     public void Print() {
         System.out.println("Stack length: " + super.getLength());
