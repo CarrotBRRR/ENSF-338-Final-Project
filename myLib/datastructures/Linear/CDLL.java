@@ -2,14 +2,34 @@ package myLib.datastructures.Linear;
 
 import myLib.datastructures.nodes.DNode;
 
-// extends DLL
+/**
+ * A Circly Doubly Linked List (CDLL) implementation that stores nodes of type DNode and a doubly linked list (DLL).
+ * Nodes can be inserted at the head, tail, or at a specific position in the CDLL.
+ * Nodes can also be sorted in ascending order based on their data.
+ * Nodes can be searched, deleted from the CDLL, and the CDLL can be sorted.
+ * Methods used are the same as DLL and are just called from DLL using super but with modifications that account for the circly functionality.
+ * 
+ * @author Nathan Ante
+ * @version 1.0
+ */
 public class CDLL extends DLL {
+
+    /**
+     * Default constructor that creates a new SLL object by calling the DLL constructor
+     */
     public CDLL() {
         super();
     }
 
+    /**
+     * Parametized constructor that creates a new DLL object by calling the DLL constructor with the node.
+     * It then sets the next node of the tail to be the head.
+     * @param node The initial node of the list.
+     */
     public CDLL(DNode node) {
         super(node);
+        super.getTail().setNext(super.getHead());
+        super.getHead().setBefore(super.getTail());
     }
 
     @Override

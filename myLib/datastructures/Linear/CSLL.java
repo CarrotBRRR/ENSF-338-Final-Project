@@ -1,15 +1,34 @@
 package myLib.datastructures.Linear;
 import myLib.datastructures.nodes.DNode;
 
-// extends SLL
+/**
+ * A Circly Singly Linked List (CSLL) implementation that stores nodes of type DNode and a singly linked list (SLL).
+ * Nodes can be inserted at the head, tail, or at a specific position in the CSLL.
+ * Nodes can also be sorted in ascending order based on their data.
+ * Nodes can be searched, deleted from the CSLL, and the CSLL can be sorted.
+ * Methods used are the same as SLL and are just called from SLL using super but with modifications that account for the circly functionality.
+ * 
+ * @author Nathan Ante
+ * @version 1.0
+ */
+
 public class CSLL extends SLL{
 
+    /**
+     * Default constructor that creates a new SLL object by calling the SLL constructor
+     */
     public CSLL() {
         super();
     }
 
+    /**
+     * Parametized constructor that creates a new SLL object by calling the SLL constructor with the node.
+     * It then sets the next node of the tail to be the head.
+     * @param node The initial node of the list.
+     */
     public CSLL(DNode node) {
         super(node);
+        super.getTail().setNext(super.getHead());
     }
 
     @Override
